@@ -1,9 +1,8 @@
 import React from 'react';
-import './App.css';
-import homeImage from './assets/img/logo_text.png';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
- // Function to start a new game
- const startNewGame = () => {
+  // Function to start a new game
+  const startNewGame = () => {
     // Reset the current scenario to the first scenario
     setCurrentScenario(gameScenarios()[0]);
   };
@@ -15,16 +14,39 @@ import homeImage from './assets/img/logo_text.png';
   };
 
 
-function App() {
-    return(
-        <div className="Home">
-            <header className="App-header">
-                <img src={homeImage} alt="Home" style={{width: "80%", height: "auto"}} />
-            </header>
-            <div className="Options-home">
-                <h1 onPress={startNewGame}>New Game</h1>
-                <h1 onPress={loadSavedGame}>Load Game</h1>
-            </div>
-        </div>
-    )
-}
+const HomePage = () => {
+  return (
+    <View style={styles.container}>
+      <Image
+        source={require('./assets/img/logo_text.png')}
+        style={styles.image}
+      />
+      <View style={styles.textContainer}>
+        <Text style={styles.text} onPress={startNewGame}>New Game</Text>
+        <Text style={styles.text} onPress={loadSavedGame}>Load Game</Text>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: '80%',
+    height: auto,
+  },
+  textContainer: {
+    padding: 20,
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 24,
+    marginBottom: 10,
+  },
+});
+
+export default HomePage;
