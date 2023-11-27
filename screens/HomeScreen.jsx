@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Image, Text, Button } from 'react-native';
+import { View, Image, Button, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
-import logoTextImage from '../assets/img/logo_text.png';
+import logoTextImage from '../assets/img/logo.png';
 //import HomeLayout from '../layout/HomeLayout';
 
 const HomeScreen = ({ navigation }) => {
@@ -18,10 +18,13 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={logoTextImage} />
-      <Text style={styles.title}>Travellers</Text>
-      <Button title="New Game" onPress={startNewGame} />
-      <Button title="Load Game" onPress={loadSavedGame} />
+      <Image source={logoTextImage} style={styles.Image} resizeMode="cover" />
+      <View style={styles.ButtonContainer}>
+      <Text style={styles.Title}>Travellers</Text>
+        <Button title="New Game" onPress={startNewGame} />
+        <View style={styles.ButtonSpace} />
+        <Button title="Load Game" onPress={loadSavedGame} />
+      </View>
     </View>
   );
 };
@@ -32,11 +35,40 @@ const styles = StyleSheet.create({
     backgroundColor: '#3f3f3f',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'relative',
   },
-  title: {
-    fontSize: 24,
+  Title: {
+    color: 'white',
+    fontFamily: 'Roboto',
+    textAlign: 'center',
+    fontSize: 36,
     fontWeight: 'bold',
     marginVertical: 20,
+  },
+  Image: {
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+  },
+  Button: {
+    width: 200,
+    marginVertical: 10,
+    marginHorizontal: 50,
+    titleStyle: {
+      color: 'white',
+      marginHorizontal: 20,
+    },
+  },
+  ButtonContainer: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    width: '75%',
+    height: '100%',
+    marginVertical: 10,
+  },
+  ButtonSpace: {
+    height: 10,
   },
 });
 
