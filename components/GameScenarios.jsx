@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
-import hallwayImage from '../img/hallway.jpeg';
+//import hallwayImage from '../assets/img/hallway.jpeg';
 export default function gameScenarios() {
   return {
     id: 1,
-    image: require('../img/hallway.jpeg'),
+    image: require('../assets/img/hallway.jpeg'),
     question: 'What do you do next?',
     choices: [
       {id: 'A', text: 'Explore the dark cave'},

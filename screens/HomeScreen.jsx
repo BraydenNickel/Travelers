@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Image, Button, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import logoTextImage from '../assets/img/logo.png';
+
 //import HomeLayout from '../layout/HomeLayout';
 
 const HomeScreen = ({ navigation }) => {
@@ -20,7 +21,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Image source={logoTextImage} style={styles.Image} resizeMode="cover" />
       <View style={styles.ButtonContainer}>
-      <Text style={styles.Title}>Travellers</Text>
+      <Text style={styles.Title}>Travelers</Text>
         <Button title="New Game" onPress={startNewGame} />
         <View style={styles.ButtonSpace} />
         <Button title="Load Game" onPress={loadSavedGame} />
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
   },
   Title: {
     color: 'white',
-    fontFamily: 'Roboto',
+    fontFamily: 'MedievalSharp-Regular', // not working
     textAlign: 'center',
     fontSize: 36,
     fontWeight: 'bold',
