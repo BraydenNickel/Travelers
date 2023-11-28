@@ -2,11 +2,9 @@
 import React from 'react';
 import { View, Image, Button, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
-import logoTextImage from '../assets/img/logo_text.png';
-<<<<<<< Updated upstream
-=======
+import logoTextImage from '../assets/img/logo.png';
 import { TouchableOpacity } from 'react-native-gesture-handler';
->>>>>>> Stashed changes
+
 
 //import HomeLayout from '../layout/HomeLayout';
 
@@ -25,8 +23,9 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={logoTextImage} style={styles.Image}/>
+      <Image source={logoTextImage} style={styles.Image} />
       <View style={styles.ButtonContainer}>
+        <Text style={styles.Title}>TRAVELERS</Text>
         <TouchableOpacity style={styles.button} onPress={startNewGame}>
             <Text style={styles.buttonText}>New Game</Text>
         </TouchableOpacity>
@@ -43,28 +42,30 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#3f3f3f',
     alignItems: 'center',
-
     position: 'relative',
   },
   Title: {
     color: 'white',
-    fontFamily: 'MedievalSharp-Regular', // not working
+    fontFamily: 'MedievalSharp-Regular',
     textAlign: 'center',
-    fontSize: 36,
+    fontSize: 70,
     marginVertical: 20,
+    textShadowColor: 'black',
+    textShadowOffset: {width: 2, height: 2},
+    textShadowRadius: 35,
   },
   Image: {
-    alignSelf: 'flex-start',
     alignSelf: 'center',
-    width: '95%',
-    height: 231,
-    marginTop: 40,
+    width: '100%',
   },
   buttonText: {
     color: 'white',
     fontSize: 60,
     fontFamily: 'MedievalSharp-Regular',
     textAlign: 'center',
+    textShadowColor: 'black',
+    textShadowOffset: {width: 3, height: 3},
+    textShadowRadius: 4,
   },
   ButtonContainer: {
     alignContent: 'center',
