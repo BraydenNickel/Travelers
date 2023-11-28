@@ -11,7 +11,7 @@ export default function HomeScreen({ children }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#3f3f3f',
+        backgroundColor: 'rgba(12, 12, 12, 0.75)',
         alignItems: 'center',
     },
     title: {
@@ -22,15 +22,5 @@ const styles = StyleSheet.create({
     question: {
         fontSize: 18,
         marginVertical: 20,
-    },
-    choiceButton: {
-        backgroundColor: 'rgba(39, 39, 39, 1)',
-        width: 200,
-        marginVertical: 10,
-        marginHorizontal: 50,
-        titleStyle: {
-            color: 'white',
-            marginHorizontal: 20,
-        },
     },
 });

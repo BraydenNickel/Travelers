@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import hallwayImage from '../assets/img/hallway.jpeg';
+import goblinImage from '../assets/img/enemy_encounter.jpeg';
 import { Image } from '@rneui/base';
 export default function gameScenarios() {
   const scenarios = [{

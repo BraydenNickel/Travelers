@@ -9,7 +9,7 @@ const IntroPage = ({ navigation }) => {
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={handleContinue}>
+    <TouchableOpacity style={styles.container} onPress={handleContinue} activeOpacity={1}>
       <Image source={CharacterImg} style={styles.image} />
       <Text style={styles.text}>Welcome to Travelers story book game</Text>
       <Text style={styles.button}>Continue</Text>

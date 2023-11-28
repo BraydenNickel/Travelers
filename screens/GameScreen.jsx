@@ -5,6 +5,7 @@ import { Button } from 'react-native';
 import { View, Image, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import GameScenarios from '../components/GameScenarios';
+import ChoiceButton from '../layout/ChoiceButton';
 
 // Combat component
 import CombatScreen from '../components/CombatScreen';
@@ -40,9 +41,8 @@ function GameScreen({ navigation }) {
       <Image source={{ uri: currentScenarioData.image}} style={styles.Image} />
       <Text style={styles.question}>{currentScenarioData.question}</Text>
       {currentScenarioData.choices.map((choice, index) => (
-        <Button
+        <ChoiceButton
             key={index}
-            style={styles.choiceButton}
             title={choice.text}
             onPress={() => handleChoice(index)}
         />
@@ -54,47 +54,25 @@ function GameScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#3f3f3f',
+        backgroundColor: 'rgba(12, 12, 12, 0.90)',
         alignItems: 'center',
-    },
-    Title: {
-        color: 'white',
-        fontFamily: 'MedievalSharp-Regular', // not working
-        textAlign: 'center',
-        fontSize: 36,
-        fontWeight: 'bold',
-        marginVertical: 20,
+        justifyContent: 'center',
+        position: 'relative',
     },
     Image: {
-        justifyContent: 'center', // i want this at the top of the screen
-        width: '80%',
-        height: '50%',
-    },
-    Text: {
-        color: 'white',
-        fontFamily: 'MedievalSharp-Regular', // not working
-        textAlign: 'center',
-        fontSize: 36,
-        fontWeight: 'bold',
-        marginVertical: 20,
+        alignSelf: 'center', 
+        width: '90%',
+        height: '35%',
+        position: 'absolute',
+        top: 20,
     },
     question: {
         color: 'white',
-        fontFamily: 'MedievalSharp-Regular', // not working
+        fontFamily: 'MedievalSharp-Regular', 
         textAlign: 'center',
         fontSize: 36,
-        fontWeight: 'bold',
         marginVertical: 20,
-    },
-    choiceButton: {
-        backgroundColor: 'rgba(39, 39, 39, 1)',
-        width: 200,
-        marginVertical: 10,
-        marginHorizontal: 50,
-        titleStyle: {
-        color: 'white',
-        marginHorizontal: 20,
-        },
+        marginTop: 200,
     },
 });
 export default GameScreen;
