@@ -2,9 +2,10 @@
 import React from 'react';
 import { View, Image, Button, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
-import logoTextImage from '../assets/img/logo.png';
+import logoTextImage from '../assets/img/logo_text.png';
 
 //import HomeLayout from '../layout/HomeLayout';
+
 
 const HomeScreen = ({ navigation }) => {
   const startNewGame = () => {
@@ -32,7 +33,6 @@ const HomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#3f3f3f',
     alignItems: 'center',
     justifyContent: 'center',
