@@ -18,10 +18,20 @@ export default function gameScenarios() {
     image: Image.resolveAssetSource(hallwayImage).uri,
     question: 'What do you do next?',
     choices: [
-      {id: 'A', text: 'Test', nextScenario: 6},
+      {id: 'A', text: 'Go deeper in the cave', nextScenario: 'EncounterGoblin'},
       {id: 'B', text: 'Test2', nextScenario: 7},
       {id: 'C', text: 'Test3', nextScenario: 8},
-      {id: 'D', text: 'Test4', nextScenario: 9},
+      {id: 'D', text: 'Turn Back', nextScenario: 1},
+    ],
+  }, {
+    id: 'EncounterGoblin', // goblin fight
+    image: Image.resolveAssetSource(hallwayImage).uri,
+    question: 'A goblin appears!',
+    choices: [
+      {id: 'A', text: 'Attack', nextScenario: 'CombatGoblin'},
+      {id: 'B', text: 'Run', nextScenario: 1},
+      {id: 'C', text: 'Test3', nextScenario: 8},
+      {id: 'D', text: 'Turn Back', nextScenario: 1},
     ],
 
     // Add more scenarios as needed

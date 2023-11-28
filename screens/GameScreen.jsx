@@ -5,15 +5,24 @@ import { Button } from 'react-native';
 import { View, Image, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import GameScenarios from '../components/GameScenarios';
-import hallwayImage from '../assets/img/hallway.jpeg';
 
-function GameScreen() {
+// Combat component
+import CombatScreen from '../components/CombatScreen';
+
+function GameScreen({ navigation }) {
     const [currentScenario, setCurrentScenario] = useState(1);
     const scenarios = GameScenarios();
 
-    const handelChoice = (choiceIndex) => {
-        const nextScenario = scenarios.find((scenario) => scenario.id === currentScenario).choices[choiceIndex].nextScenario;
-        setCurrentScenario(nextScenario);
+    const handleChoice = (choiceIndex) => {
+        const currentScenarioData = scenarios.find((scenario) => scenario.id === currentScenario);
+
+        // check if the current scenario is a combat scenario
+        if (currentScenarioData.choices[choiceIndex].nextScenario === 'CombatGoblin') {
+            navigation.navigate('CombatScreen');
+        } else {
+            const nextScenario = currentScenarioData.choices[choiceIndex].nextScenario;
+            setCurrentScenario(nextScenario);
+        }
     };
 
     const currentScenarioData = scenarios.find((scenario) => scenario.id === currentScenario);
@@ -35,12 +44,12 @@ function GameScreen() {
             key={index}
             style={styles.choiceButton}
             title={choice.text}
-            onPress={() => handelChoice(index)}
+            onPress={() => handleChoice(index)}
         />
         ))}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -88,5 +97,4 @@ const styles = StyleSheet.create({
         },
     },
 });
-
 export default GameScreen;

@@ -17,6 +17,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
 import IntroPage from './screens/IntroPage';
 import GameScreen from './screens/GameScreen';
+import CombatScreen from './components/CombatScreen';
 
 
 
@@ -29,6 +30,7 @@ const App = () => {
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="IntroPage" component={IntroPage} />
         <Stack.Screen name="GameScreen" component={GameScreen} />
+        <Stack.Screen name="CombatScreen" component={CombatScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
