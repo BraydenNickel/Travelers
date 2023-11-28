@@ -18,6 +18,8 @@ import HomeScreen from './screens/HomeScreen';
 import IntroPage from './screens/IntroPage';
 import GameScreen from './screens/GameScreen';
 
+
+
 const Stack = createStackNavigator();
 
 const App = () => {
