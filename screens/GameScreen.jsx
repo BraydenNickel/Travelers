@@ -5,50 +5,39 @@ import { Button } from 'react-native';
 import { View, Image, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import GameScenarios from '../components/GameScenarios';
+import hallwayImage from '../assets/img/hallway.jpeg';
 
-function GameScreen({ navigation }) {
-    const [currentScenario, setCurrentScenario] = useState(0);
+function GameScreen() {
+    const [currentScenario, setCurrentScenario] = useState(1);
     const scenarios = GameScenarios();
 
     const handelChoice = (choiceIndex) => {
-        const nextScenario = scenarios[currentScenario].choices[choiceIndex].nextScenario;
+        const nextScenario = scenarios.find((scenario) => scenario.id === currentScenario).choices[choiceIndex].nextScenario;
         setCurrentScenario(nextScenario);
     };
 
-    const currentScenarioData = scenarios[currentScenario];
+    const currentScenarioData = scenarios.find((scenario) => scenario.id === currentScenario);
+
+    if (!currentScenarioData) {
+        return (
+          <View style={styles.container}>
+            <Text style={styles.Title}>No scenario found</Text>
+          </View>
+        );
+      }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.Title}>Travelers</Text>
-      <Image source={currentScenarioData.image} style={styles.Image} />
+      <Image source={{ uri: currentScenarioData.image}} style={styles.Image} />
       <Text style={styles.question}>{currentScenarioData.question}</Text>
       {currentScenarioData.choices.map((choice, index) => (
-        <>
         <Button
             key={index}
             style={styles.choiceButton}
-            Text={choice.text}
+            title={choice.text}
             onPress={() => handelChoice(index)}
         />
-        <Button
-            key={index}
-            style={styles.choiceButton}
-            Text={choice.text}
-            onPress={() => handelChoice(index)}
-        />
-        <Button
-            key={index}
-            style={styles.choiceButton}
-            Text={choice.text}
-            onPress={() => handelChoice(index)}
-        />
-        <Button
-            key={index}
-            style={styles.choiceButton}
-            Text={choice.text}
-            onPress={() => handelChoice(index)}
-        />
-        </>
-        ))};
+        ))}
     </View>
   );
 }
