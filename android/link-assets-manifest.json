@@ -1,4 +1,13 @@
 {
   "migIndex": 1,
-  "data": []
+  "data": [
+    {
+      "path": "assets/fonts/MedievalSharp-Regular.ttf",
+      "sha1": "2aa66be87b648c3e4ca7983c440e1f009b092ee6"
+    },
+    {
+      "path": "assets/fonts/OFL.txt",
+      "sha1": "47f7972d27da362f3de3da88a22fb24fe78e9ba4"
+    }
+  ]
 }
