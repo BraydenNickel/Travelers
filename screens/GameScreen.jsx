@@ -5,18 +5,11 @@ import { Button } from 'react-native';
 import { View, Image, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import GameScenarios from '../components/GameScenarios';
-<<<<<<< Updated upstream
-=======
 import hallwayImage from '../assets/img/hallway.jpeg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
->>>>>>> Stashed changes
 
 function GameScreen({ navigation }) {
-<<<<<<< Updated upstream
-    const [currentScenario, setCurrentScenario] = useState(0);
-=======
     const [currentScenario, setCurrentScenario] = useState('BeginGame');
->>>>>>> Stashed changes
     const scenarios = GameScenarios();
 
   
@@ -26,9 +19,6 @@ function GameScreen({ navigation }) {
         setCurrentScenario(nextScenario);
     };
 
-<<<<<<< Updated upstream
-    const currentScenarioData = scenarios[currentScenario];
-=======
     const CustomButton = ({ title,onPress}) => {
         <TouchableOpacity style={styles.button} onPress={onPress}>
             <Text style={styles.buttonText}>{title}</Text>
@@ -46,7 +36,6 @@ function GameScreen({ navigation }) {
 
       }
 
->>>>>>> Stashed changes
   return (
     <View style={styles.container}>
       <Text style={styles.Title}>Travelers</Text>
@@ -55,38 +44,11 @@ function GameScreen({ navigation }) {
 
 
       {currentScenarioData.choices.map((choice, index) => (
-<<<<<<< Updated upstream
-        <>
-        <Button
-            key={index}
-            style={styles.choiceButton}
-            Text={choice.text}
-=======
         <CustomButton
             key={index}
             title={choice.text}
->>>>>>> Stashed changes
             onPress={() => handelChoice(index)}
         />
-        <Button
-            key={index}
-            style={styles.choiceButton}
-            Text={choice.text}
-            onPress={() => handelChoice(index)}
-        />
-        <Button
-            key={index}
-            style={styles.choiceButton}
-            Text={choice.text}
-            onPress={() => handelChoice(index)}
-        />
-        <Button
-            key={index}
-            style={styles.choiceButton}
-            Text={choice.text}
-            onPress={() => handelChoice(index)}
-        />
-        </>
         ))};
     </View>
   );
@@ -121,26 +83,12 @@ const styles = StyleSheet.create({
     },
     question: {
         color: 'white',
-<<<<<<< Updated upstream
-        fontFamily: 'MedievalSharp-Regular', // not working
-        textAlign: 'center',
-        fontSize: 36,
-        fontWeight: 'bold',
-        marginVertical: 20,
-    },
-    button: {
-        backgroundColor: 'rgba(90, 90, 90, 1)',
-        width: 310,
-        marginVertical: 10,
-        marginHorizontal: 50,
-=======
         fontFamily: 'MedievalSharp-Regular', 
         textAlign: 'justify',
         fontSize: 24,
         marginVertical: 20,
         marginTop: 150,
         marginHorizontal: 10,
->>>>>>> Stashed changes
     },
 });
 

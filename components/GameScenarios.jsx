@@ -4,6 +4,7 @@ import hallwayImage from '../assets/img/hallway.jpeg';
 import goblinImage from '../assets/img/enemy_encounter.jpeg';
 import forestImage from '../assets/img/forest.jpeg';
 import bullImage from '../assets/img/boss_encounter.jpeg';
+import trinketRoom from '../assets/img/trinket-room.jpeg';
 import { Image } from '@rneui/base';
 
 export default function gameScenarios() {
@@ -51,7 +52,7 @@ export default function gameScenarios() {
     {id: 'A', text: 'Continue', nextScenario: 'YouWin'},
   ],
 }, {
-  id: 'BossEncounter', //First Scene
+  id: 'BossEncounter', 
   image: Image.resolveAssetSource(bullImage).uri,
   question: 'You enter a well lit hallway. You feel a heavy pressure in the air. A loud roar suddenly assaults your hearing. A Minotaur appears and blocks your path.',
   choices: [
@@ -61,8 +62,8 @@ export default function gameScenarios() {
     {id: 'D', text: 'Turn Back', nextScenario: 1},
   ],
 }, {
-  id: 'TrinketRoom', //First Scene
-  image: Image.resolveAssetSource(bullImage).uri,
+  id: 'TrinketRoom', 
+  image: Image.resolveAssetSource(trinketRoom).uri,
   question: 'You enter a room full of trinkets. You feel yourself grow stronger whenever you approach one of them. You can only carry one out with you.',
   choices: [
     {id: 'A', text: 'HP Ring', nextScenario: 'MainHallway'},
