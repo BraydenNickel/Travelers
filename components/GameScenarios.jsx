@@ -5,6 +5,7 @@ import goblinImage from '../assets/img/enemy_encounter.jpeg';
 import forestImage from '../assets/img/forest.jpeg';
 import bullImage from '../assets/img/boss_encounter.jpeg';
 import trinketRoom from '../assets/img/trinket-room.jpeg';
+import StatsManager from './StatsManager';
 import { Image } from '@rneui/base';
 
 export default function gameScenarios() {
@@ -40,7 +41,7 @@ export default function gameScenarios() {
   choices: [
     {id: 'A', text: 'Go deeper', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(10) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
     {id: 'B', text: 'Go left', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(10) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
-    {id: 'C', text: 'Go right', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(10) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
+    {id: 'C', text: 'Go right', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(99) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
   ],
 
   // Add more scenarios as needed
@@ -79,7 +80,7 @@ export default function gameScenarios() {
   choices: [
     {id: 'A', text: 'HP Ring', nextScenario: 'MainHallway'},
     {id: 'B', text: 'Mana Necklace', nextScenario: 'MainHallway'},
-    {id: 'C', text: 'Crown of Intelligence', nextScenario: 'MainHallway'},
+    {id: 'C', text: 'Crown of Intelligence', action: () => updateStats({ intelligence: playerStats.intelligence + 5}), nextScenario: 'MainHallway'},
     {id: 'D', text: 'Armband of Strength', nextScenario: 'MainHallway'},
   ],
 },

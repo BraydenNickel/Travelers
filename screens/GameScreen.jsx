@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import { useState } from 'react';
-import { Button } from 'react-native';
 import { View, Image, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import GameScenarios from '../components/GameScenarios';
@@ -12,7 +11,7 @@ import CombatScreen from '../components/CombatScreen';
 import PlayerStats from '../components/PlayerStats';
 
 function GameScreen({ navigation }) {
-    const [currentScenario, setCurrentScenario] = useState(1);
+    const [currentScenario, setCurrentScenario] = useState('BeginGame');
     const { scenarios, playerStats, updateStats} = GameScenarios();
 
     const handleChoice = (choiceIndex) => {
