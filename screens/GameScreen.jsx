@@ -11,7 +11,7 @@ import CombatScreen from '../components/CombatScreen';
 import PlayerStats from '../components/PlayerStats';
 
 function GameScreen({ navigation }) {
-    const [currentScenario, setCurrentScenario] = useState('BeginGame');
+    const [currentScenario, setCurrentScenario] = useState('GameStart');
     const { scenarios, playerStats, updateStats} = GameScenarios();
 
     const handleChoice = (choiceIndex) => {

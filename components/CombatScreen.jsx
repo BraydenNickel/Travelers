@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, Button, Text } from 'react-native';
 import PlayerStats from '../components/PlayerStats';
-import GameScenarios from '../components/GameScenarios';
+import GameScenarios from './GameScenarios';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 
