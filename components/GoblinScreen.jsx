@@ -4,6 +4,7 @@ import { View, Image, Text, StyleSheet, ScrollView } from 'react-native';
 import GameScenarios from './GameScenarios';
 import { useFocusEffect } from '@react-navigation/native';
 import ChoiceButton from '../layout/ChoiceButton';
+import goblinImage from '../assets/img/enemy_encounter.jpeg';
 
 
 const GoblinScreen = ({ navigation, route} ) => {
@@ -130,23 +131,24 @@ const GoblinScreen = ({ navigation, route} ) => {
       if (scrollViewRef.current) {
         scrollViewRef.current.scrollToEnd({ animated:true});
       }
-    }
-  
+    };
 
 
     return (
         <View style={styles.container}>
+          <Image source = {goblinImage} style={styles.Image} />
           <View style={styles.informationContainer}>
-            <Text style={styles.information}>Player Health: {playerStats.health}</Text>
-            <Text style={styles.information}>Player Mana: {playerStats.mana}</Text>
-            <Text style={styles.information}>Goblin Health: {goblinHealth}</Text>
+            <Text style={styles.information}>Player Health: <Text style={styles.health}>{playerStats.health}</Text></Text>
+            <Text style={styles.information}>Player Mana: <Text style={styles.mana}>{playerStats.mana}</Text></Text>
+            <Text style={styles.information}><Text style={styles.goblin}>Goblin</Text> Health: <Text style={styles.health}>{goblinHealth}</Text></Text>
           </View>
           <View style={styles.buttonContainer}>
               <ChoiceButton title="Physical Attack" onPress={handleAttack} />
               <ChoiceButton title="Magic Attack" onPress={handleMagic} />
+              <ChoiceButton title="Run Away" onPress={() => navigation.pop()} />
           </View>
-          <ScrollView 
-            style={styles.logScrollContainer}  
+          <ScrollView
+            style={styles.logScrollContainer}
             ref={scrollViewRef}
             onContentSizeChange={scrollToBot}>
             <View style={styles.logContainer}>
@@ -169,12 +171,21 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
 
-  information : {
+  information: {
     color: 'white',
     fontSize: 24,
     fontFamily: 'MedievalSharp-Regular',
     paddingBottom: 4,
     textAlign: 'left',
+  },
+  health: {
+    color: 'red',
+  },
+  mana: {
+    color: 'blue',
+  },
+  goblin: {
+    color: 'green',
   },
 
   informationContainer : {
@@ -196,10 +207,18 @@ const styles = StyleSheet.create({
   logScrollContainer : {
     flex: 1,
     maxHeight: 350,
-    marginTop: 20
-  }
+    marginTop: 20,
+  },
+  Image: {
+    alignSelf: 'center',
+    width: '90%',
+    height: '35%',
+    position: 'relative',
+    marginTop: 20,
+    marginBottom: 20,
+},
 
-  
-})
+
+});
 
 export default GoblinScreen;

@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
 import { useCallback, useState } from 'react';
 import hallwayImage from '../assets/img/hallway.jpeg';
 import goblinImage from '../assets/img/enemy_encounter.jpeg';
@@ -137,9 +136,9 @@ export default function GameScenarios() {
       choices: [
         {id: 'A', text: 'Restore Health and Mana'},
         {id: 'B', text: 'Save Game'},
-        {id: 'C', text: 'Return to Dungeon', nextScenario: 'MainHallwayStart'}
-      ]
-    } 
+        {id: 'C', text: 'Return to Dungeon', nextScenario: 'MainHallwayStart'},
+      ],
+    },
   ];
   return { scenarios, updateStats, playerStats };
 }
