@@ -13,21 +13,22 @@ import PlayerStats from '../components/PlayerStats';
 
 function GameScreen({ navigation }) {
     const [currentScenario, setCurrentScenario] = useState(1);
-    const { scenarios, playerStats, updateStats } = GameScenarios();
+    const { scenarios, playerStats, updateStats} = GameScenarios();
 
     const handleChoice = (choiceIndex) => {
         const currentScenarioData = scenarios.find((scenario) => scenario.id === currentScenario);
 
         // check if the current scenario is a combat scenario
         if (currentScenarioData.choices[choiceIndex].nextScenario === 'CombatGoblin') {
-            navigation.navigate('CombatScreen');
+            navigation.navigate('CombatScreen', { playerStats: playerStats, updateStats: updateStats });
         } else {
             const nextScenario = currentScenarioData.choices[choiceIndex].nextScenario;
             setCurrentScenario(nextScenario);
 
             const action = currentScenarioData.choices[choiceIndex].action;
             if (action) {
-                action();
+                const updatedStats = action();
+                updateStats(updatedStats);
             }
         }
     };
@@ -44,7 +45,6 @@ function GameScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-
       <Image source={{ uri: currentScenarioData.image}} style={styles.Image} />
       <Text style={styles.question}>{currentScenarioData.question}</Text>
       {currentScenarioData.choices.map((choice, index) => (

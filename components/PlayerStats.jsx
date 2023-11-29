@@ -2,7 +2,7 @@
 import React, { useState, useEffect} from 'react';
 import { View, Text } from 'react-native';
 import { ProgressBarAndroid } from '@react-native-community/progress-bar-android';
-const PlayerStats = ({ updateStats, stats }) => {
+const PlayerStats = ({ stats }) => {
   // State to manage progress bar
   const [experienceToNextLevel, setExperienceToNextLevel] = useState(0);
 

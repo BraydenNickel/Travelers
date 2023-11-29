@@ -1,21 +1,34 @@
 /* eslint-disable prettier/prettier */
 import goblinImage from '../assets/img/enemy_encounter.jpeg';
 import { Image } from '@rneui/base';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import hallwayImage from '../assets/img/hallway.jpeg';
 import PlayerStats from '../components/PlayerStats';
 
-const initialPlayerStats = PlayerStats.playerStats;
 
 export default function GameScenarios() {
-  const [playerStats, setPlayerStats] = useState(initialPlayerStats);
+  const [playerStats, setPlayerStats] = useState({
+    health: 100,
+    mana: 50,
+    strength: 5,
+    intelligence: 5,
+    experience: 0,
+    level: 1,
+  });
 
-  const updateStats = (newStats) => {
-    setPlayerStats((prevStats) => ({
-      ...prevStats,
-      ...newStats,
-    }));
-  };
+  const updateStats = useCallback((action) => {
+    setPlayerStats((prevStats) => {
+      const updatedStats = {
+        ...prevStats,
+        ...action,
+      };
+
+      console.log('Updated Stats:', updatedStats);
+
+      return updatedStats;
+    });
+  }, []);
+
 
   const scenarios = [
     {
@@ -23,7 +36,7 @@ export default function GameScenarios() {
       image: Image.resolveAssetSource(hallwayImage).uri,
       question: 'What do you do next?',
       choices: [
-        { id: 'A', text: 'Explore the dark cave', action: () => updateStats({ intelligence: 5}), nextScenario: 2 },
+        { id: 'A', text: 'Explore the dark cave', action: () => updateStats({ intelligence: playerStats.intelligence + 5}), nextScenario: 2 },
         { id: 'B', text: 'Head towards the village', nextScenario: 3 },
         { id: 'C', text: 'Go back to the ship', nextScenario: 4 },
         { id: 'D', text: 'Go back to the ship', nextScenario: 5 },
@@ -34,7 +47,7 @@ export default function GameScenarios() {
       image: Image.resolveAssetSource(hallwayImage).uri,
       question: 'What do you do next?',
       choices: [
-        { id: 'A', text: 'Go deeper in the cave', action: () => updateStats({ intelligence: 5}), nextScenario: 'EncounterGoblin' },
+        { id: 'A', text: 'Go deeper in the cave', action: () => updateStats({ intelligence: playerStats.intelligence + 5}), nextScenario: 'EncounterGoblin' },
         { id: 'B', text: 'Test2', nextScenario: 7 },
         { id: 'C', text: 'Test3', nextScenario: 8 },
         { id: 'D', text: 'Turn Back', nextScenario: 1 },
@@ -51,13 +64,19 @@ export default function GameScenarios() {
         { id: 'D', text: 'Turn Back', nextScenario: 1 },
       ],
     },
+    {
+      id: 'Victory',
+      image: Image.resolveAssetSource(hallwayImage).uri,
+      question: 'You win!',
+      choices: [
+        { id: 'A', text: 'Continue', nextScenario: 1 },
+        { id: 'B', text: 'Test2', nextScenario: 7 },
+        { id: 'C', text: 'Test3', nextScenario: 8 },
+        { id: 'D', text: 'Turn Back', nextScenario: 1 },
+      ],
+    },
     // Add more scenarios as needed
   ];
-
-
-  useEffect(() => {
-    console.log('playerStats', playerStats);
-  }, [playerStats]);
 
   return { scenarios, updateStats, playerStats };
 }
