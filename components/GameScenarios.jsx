@@ -6,6 +6,7 @@ import goblinImage from '../assets/img/enemy_encounter.jpeg';
 import forestImage from '../assets/img/forest.jpeg';
 import bullImage from '../assets/img/boss_encounter.jpeg';
 import trinketRoom from '../assets/img/trinket-room.jpeg';
+import Campsite from '../assets/img/campsite.jpeg';
 import { Image } from '@rneui/base';
 
 
@@ -128,7 +129,17 @@ export default function GameScenarios() {
         { id: 'C', text: 'Test3', nextScenario: 8 },
         { id: 'D', text: 'Turn Back', nextScenario: 1 },
       ],
-    }
+    },
+    {
+      id: 'Campsite',
+      image: Image.resolveAssetSource(Campsite).uri,
+      question: 'You decide to set up camp in one of the abandoned rooms. You start a fire and sit near it.',
+      choices: [
+        {id: 'A', text: 'Restore Health and Mana'},
+        {id: 'B', text: 'Save Game'},
+        {id: 'C', text: 'Return to Dungeon', nextScenario: 'MainHallwayStart'}
+      ]
+    } 
   ];
   return { scenarios, updateStats, playerStats };
 }
