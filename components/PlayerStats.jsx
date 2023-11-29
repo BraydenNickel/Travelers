@@ -2,46 +2,49 @@
 import React, { useState, useEffect} from 'react';
 import { View, Text } from 'react-native';
 import { ProgressBarAndroid } from '@react-native-community/progress-bar-android';
-const PlayerStats = ({ playerStats }) => {
-    const {
-      health = 100,
-      mana = 50,
-      strength = 5,
-      intelligence = 5,
-      experience = 0,
-      level = 1,
-    } = playerStats || {};
-
-  // State to manage player stats
-  // eslint-disable-next-line no-unused-vars
-  const [stats, setStats] = useState(playerStats);
-
+const PlayerStats = ({ updateStats, stats }) => {
   // State to manage progress bar
   const [experienceToNextLevel, setExperienceToNextLevel] = useState(0);
 
   useEffect(() => {
-    // Calculate experience to next level whenever experience or level changes
-    const nextLevelExperience = stats.level * 100;
-    const currentExperience = stats.experience;
-    const progress = (currentExperience / nextLevelExperience) * 100;
-    setExperienceToNextLevel(progress);
-  }, [stats.experience, stats.level]);
-
+    // Check if stats is defined before accessing its properties
+    if (stats) {
+      setExperienceToNextLevel((stats.experience / (stats.level * 100)) * 100);
+    }
+  }, [stats]);
   return (
-        <View>
-            <Text>Health: {health}</Text>
-            <Text>Mana: {mana}</Text>
-            <Text>Strength: {strength}</Text>
-            <Text>Intelligence: {intelligence}</Text>
-            <Text>Level: {level}</Text>
-            <ProgressBarAndroid
-                styleAttr="Horizontal"
-                indeterminate={false}
-                progress={experienceToNextLevel / 100}
-            />
-            <Text>Experience: {experience}</Text>
-        </View>
-    );
+    <View>
+      {/* Additional checks for stats object */}
+      {stats && typeof stats === 'object' ? (
+        <>
+          <Text>Health: {stats.health}</Text>
+          <Text>Mana: {stats.mana}</Text>
+          <Text>Strength: {stats.strength}</Text>
+          <Text>Intelligence: {stats.intelligence}</Text>
+          <Text>Level: {stats.level}</Text>
+          <ProgressBarAndroid
+            styleAttr="Horizontal"
+            indeterminate={false}
+            progress={experienceToNextLevel / 100}
+          />
+          <Text>Experience: {stats.experience}</Text>
+        </>
+      ) : (
+        <Text>Stats are undefined or not an object</Text>
+      )}
+    </View>
+  );
 };
-
+/*
+PlayerStats.defaultProps = {
+    playerStats: {
+      health: 100,
+      mana: 50,
+      strength: 5,
+      intelligence: 5,
+      experience: 0,
+      level: 1,
+    },
+  };
+*/
 export default PlayerStats;

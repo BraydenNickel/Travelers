@@ -9,10 +9,11 @@ import ChoiceButton from '../layout/ChoiceButton';
 
 // Combat component
 import CombatScreen from '../components/CombatScreen';
+import PlayerStats from '../components/PlayerStats';
 
 function GameScreen({ navigation }) {
     const [currentScenario, setCurrentScenario] = useState(1);
-    const scenarios = GameScenarios();
+    const { scenarios, playerStats, updateStats } = GameScenarios();
 
     const handleChoice = (choiceIndex) => {
         const currentScenarioData = scenarios.find((scenario) => scenario.id === currentScenario);
@@ -23,6 +24,11 @@ function GameScreen({ navigation }) {
         } else {
             const nextScenario = currentScenarioData.choices[choiceIndex].nextScenario;
             setCurrentScenario(nextScenario);
+
+            const action = currentScenarioData.choices[choiceIndex].action;
+            if (action) {
+                action();
+            }
         }
     };
 
@@ -38,6 +44,7 @@ function GameScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+
       <Image source={{ uri: currentScenarioData.image}} style={styles.Image} />
       <Text style={styles.question}>{currentScenarioData.question}</Text>
       {currentScenarioData.choices.map((choice, index) => (
@@ -49,7 +56,7 @@ function GameScreen({ navigation }) {
         ))}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -60,7 +67,7 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     Image: {
-        alignSelf: 'center', 
+        alignSelf: 'center',
         width: '90%',
         height: '35%',
         position: 'absolute',
@@ -68,7 +75,7 @@ const styles = StyleSheet.create({
     },
     question: {
         color: 'white',
-        fontFamily: 'MedievalSharp-Regular', 
+        fontFamily: 'MedievalSharp-Regular',
         textAlign: 'center',
         fontSize: 36,
         marginVertical: 20,
