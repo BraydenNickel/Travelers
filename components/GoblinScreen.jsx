@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from 'react';
-import { View, Image, Button, Text } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Image, Text, StyleSheet, ScrollView } from 'react-native';
 import GameScenarios from './GameScenarios';
 import { useFocusEffect } from '@react-navigation/native';
+import ChoiceButton from '../layout/ChoiceButton';
 
 
 const GoblinScreen = ({ navigation, route} ) => {
@@ -123,21 +124,82 @@ const GoblinScreen = ({ navigation, route} ) => {
         }
     }, [goblinHealth, playerStats, isPlayerTurn, navigation, scenarios, updateStats]);
 
+    const scrollViewRef = useRef();
+
+    const scrollToBot = () => {
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollToEnd({ animated:true});
+      }
+    }
+  
+
 
     return (
-        <View>
-            <Text>Player Health: {playerStats.health}</Text>
-            <Text>Player Mana: {playerStats.mana}</Text>
-            <Text>Goblin Health: {goblinHealth}</Text>
-            <Button title="Physical Attack" onPress={handleAttack} />
-            <Button title="Magic Attack" onPress={handleMagic} />
-            <View>
+        <View style={styles.container}>
+          <View style={styles.informationContainer}>
+            <Text style={styles.information}>Player Health: {playerStats.health}</Text>
+            <Text style={styles.information}>Player Mana: {playerStats.mana}</Text>
+            <Text style={styles.information}>Goblin Health: {goblinHealth}</Text>
+          </View>
+          <View style={styles.buttonContainer}>
+              <ChoiceButton title="Physical Attack" onPress={handleAttack} />
+              <ChoiceButton title="Magic Attack" onPress={handleMagic} />
+          </View>
+          <ScrollView 
+            style={styles.logScrollContainer}  
+            ref={scrollViewRef}
+            onContentSizeChange={scrollToBot}>
+            <View style={styles.logContainer}>
                 {combatLog.map((log, index) => (
-                    <Text key={index}>{log}</Text>
+                    <Text style={styles.logInformation} key={index}>{log}</Text>
                 ))}
             </View>
+          </ScrollView>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+  container : {
+    flex: 1,
+    backgroundColor: 'rgba(12,12,12,0.90)',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    paddingLeft: 15,
+    paddingTop: 20,
+  },
+
+  information : {
+    color: 'white',
+    fontSize: 24,
+    fontFamily: 'MedievalSharp-Regular',
+    paddingBottom: 4,
+    textAlign: 'left',
+  },
+
+  informationContainer : {
+    marginBottom: 25,
+  },
+
+  buttonContainer : {
+    alignSelf: 'center',
+    marginTop: 10,
+    marginRight: 15,
+  },
+
+  logInformation : {
+    color: 'white',
+    fontSize: 20,
+    fontFamily: 'MedievalSharp-Regular',
+  },
+
+  logScrollContainer : {
+    flex: 1,
+    maxHeight: 350,
+    marginTop: 20
+  }
+
+  
+})
 
 export default GoblinScreen;

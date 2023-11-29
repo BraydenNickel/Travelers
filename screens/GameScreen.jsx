@@ -72,16 +72,16 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: '90%',
         height: '35%',
-        position: 'absolute',
-        top: 20,
+        position: 'relative',
+        marginTop: 20,
     },
     question: {
         color: 'white',
         fontFamily: 'MedievalSharp-Regular',
         textAlign: 'center',
-        fontSize: 36,
-        marginVertical: 20,
-        marginTop: 200,
+        fontSize: 28,
+        marginBottom: 30,
+        marginTop: 20,
     },
 });
 export default GameScreen;
