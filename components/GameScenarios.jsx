@@ -1,16 +1,4 @@
 /* eslint-disable prettier/prettier */
-<<<<<<< Updated upstream
-//import hallwayImage from '../assets/img/hallway.jpeg';
-export default function gameScenarios() {
-  return {
-    id: 1,
-    image: require('../assets/img/hallway.jpeg'),
-    question: 'What do you do next?',
-    choices: [
-      {id: 'A', text: 'Explore the dark cave'},
-      {id: 'B', text: 'Head towards the village'},
-      // Add more choices as needed
-=======
 import React from 'react';
 import hallwayImage from '../assets/img/hallway.jpeg';
 import goblinImage from '../assets/img/enemy_encounter.jpeg';
@@ -26,14 +14,6 @@ export default function gameScenarios() {
   const generateEncounter = ( chance ) => {
     return getRandomInt(1, 100) <= chance;
   };
-
-  const generateEncounterBoss = () => {
-    return getRandomInt(1, 100) <= 10;
-  };
-
-  const generateEncounterTreasure = () => {
-    return getRandomInt(1, 100) <= 5;
-  }
 
   const scenarios = [{
     id: 'EncounterGoblin', // goblin fight
@@ -57,18 +37,18 @@ export default function gameScenarios() {
   image: Image.resolveAssetSource(hallwayImage).uri,
   question: 'You find yourself in a well lit hallway with many branching paths. Looks like you have to pick a path to start exploring the dungeon.' ,
   choices: [
-    {id: 'A', text: 'Go deeper', nextScenario: generateEncounter(30) ? 'EncounterGoblin' : generateEncounter(99) ? 'BossEncounter' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
-    {id: 'B', text: 'Go left', nextScenario: generateEncounter(30) ? 'EncounterGoblin' : generateEncounter(99) ? 'BossEncounter' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
-    {id: 'C', text: 'Go right', nextScenario: generateEncounter(30) ? 'EncounterGoblin' : generateEncounter(99) ? 'BossEncounter' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
+    {id: 'A', text: 'Go deeper', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(10) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
+    {id: 'B', text: 'Go left', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(10) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
+    {id: 'C', text: 'Go right', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(10) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
   ],
 
   // Add more scenarios as needed
 }, {
   id: 'TreasureRoom', //Stat Increase
   image: Image.resolveAssetSource(forestImage).uri,
-  question: 'You enter a room full of treasure. You only have enough to grab one.',
+  question: 'After who knows how long, you finally reach the fabled treasure room. You enter and feel a burst of happiness. You finally reached the end of your journey.',
   choices: [
-    {id: 'A', text: 'Enter the dungeon', nextScenario: 'MainHallway'},
+    {id: 'A', text: 'Continue', nextScenario: 'YouWin'},
   ],
 }, {
   id: 'BossEncounter', //First Scene
@@ -79,6 +59,16 @@ export default function gameScenarios() {
     {id: 'B', text: 'Run', nextScenario: 1},
     {id: 'C', text: 'Test3', nextScenario: 8},
     {id: 'D', text: 'Turn Back', nextScenario: 1},
+  ],
+}, {
+  id: 'TrinketRoom', //First Scene
+  image: Image.resolveAssetSource(bullImage).uri,
+  question: 'You enter a room full of trinkets. You feel yourself grow stronger whenever you approach one of them. You can only carry one out with you.',
+  choices: [
+    {id: 'A', text: 'HP Ring', nextScenario: 'MainHallway'},
+    {id: 'B', text: 'Mana Necklace', nextScenario: 'MainHallway'},
+    {id: 'C', text: 'Crown of Intelligence', nextScenario: 'MainHallway'},
+    {id: 'D', text: 'Armband of Strength', nextScenario: 'MainHallway'},
   ],
 },
 
@@ -94,8 +84,7 @@ export default function gameScenarios() {
       {id: 'B', text: 'Head towards the village', nextScenario: 3},
       {id: 'C', text: 'Go back to the ship', nextScenario: 4},
       {id: 'D', text: 'Go back to the ship', nextScenario: 5},
->>>>>>> Stashed changes
     ],
     // Add more scenarios as needed
   };
-}
+}*/
