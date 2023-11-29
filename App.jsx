@@ -30,7 +30,7 @@ const App = () => {
         <Stack.Screen name="GameScreen" component={GameScreen} />
         <Stack.Screen name="GoblinScreen" component={GoblinScreen} />
         <Stack.Screen name="MinotaurScreen" component={MinotaurScreen} />
-      </Stack.Navigator>
+        </Stack.Navigator>
     </NavigationContainer>
   );
 };

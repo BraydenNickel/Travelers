@@ -8,7 +8,6 @@ import trinketRoom from '../assets/img/trinket-room.jpeg';
 import Campsite from '../assets/img/campsite.jpeg';
 import { Image } from '@rneui/base';
 
-
 export default function GameScenarios() {
 
   const [playerStats, setPlayerStats] = useState({
