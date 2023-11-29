@@ -7,7 +7,7 @@ import GameScenarios from '../components/GameScenarios';
 import ChoiceButton from '../layout/ChoiceButton';
 
 // Combat component
-import CombatScreen from '../components/CombatScreen';
+import CombatScreen from '../components/GoblinScreen';
 import PlayerStats from '../components/PlayerStats';
 
 function GameScreen({ navigation }) {
@@ -19,7 +19,10 @@ function GameScreen({ navigation }) {
 
         // check if the current scenario is a combat scenario
         if (currentScenarioData.choices[choiceIndex].nextScenario === 'CombatGoblin') {
-            navigation.navigate('CombatScreen', { playerStats: playerStats, updateStats: updateStats });
+            navigation.navigate('GoblinScreen', { playerStats: playerStats, updateStats: updateStats, currentScenario: currentScenario });
+        }
+        else if (currentScenarioData.choices[choiceIndex].nextScenario === 'CombatMinotaur'){
+            navigation.navigate('MinotaurScreen', { playerStats: playerStats, updateStats: updateStats, currentScenario: currentScenario });
         } else {
             const nextScenario = currentScenarioData.choices[choiceIndex].nextScenario;
             setCurrentScenario(nextScenario);

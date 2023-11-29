@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 // StatsManager.js
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const StatsManager = () => {
   const initialStats = {

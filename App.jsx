@@ -7,17 +7,15 @@
  */
 
 import React from 'react';
-import {useState} from 'react';
-import {Button} from 'react-native';
-import {View, Image, Text} from 'react-native';
-import {StyleSheet} from 'react-native';
-import HomeLayout from './layout/HomeLayout';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
 import IntroPage from './screens/IntroPage';
 import GameScreen from './screens/GameScreen';
-import CombatScreen from './components/CombatScreen';
+import GoblinScreen from './components/GoblinScreen';
+import MinotaurScreen from './components/MinotaurScreen';
+import VictoryScreen from './screens/VictoryScreen';
+import GameOverScreen from './screens/GameOverScreen';
 
 
 
@@ -30,7 +28,8 @@ const App = () => {
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="IntroPage" component={IntroPage} />
         <Stack.Screen name="GameScreen" component={GameScreen} />
-        <Stack.Screen name="CombatScreen" component={CombatScreen} />
+        <Stack.Screen name="GoblinScreen" component={GoblinScreen} />
+        <Stack.Screen name="MinotaurScreen" component={MinotaurScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

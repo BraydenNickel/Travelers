@@ -48,7 +48,7 @@ export default function GameScenarios() {
       question: 'As you walk along, you notice that you start seeing a lot of broken objects. You suddenly hear maniacal laughter approach you. Out of the dim hallway, a goblin appears.',
       choices: [
         { id: 'A', text: 'Attack', nextScenario: 'CombatGoblin' },
-        { id: 'B', text: 'Run', nextScenario: 1 },
+        { id: 'B', text: 'Run', nextScenario: 'MainHallwayStart' },
         { id: 'C', text: 'Test3', nextScenario: 8 },
         { id: 'D', text: 'Turn Back', nextScenario: 'MainHallway' },
       ],
@@ -91,7 +91,7 @@ export default function GameScenarios() {
       image: Image.resolveAssetSource(bullImage).uri,
       question: 'You enter a well lit hallway. You feel a heavy pressure in the air. A loud roar suddenly assaults your hearing. A Minotaur appears and blocks your path.',
       choices: [
-        { id: 'A', text: 'Attack', nextScenario: 'CombatGoblin' },
+        { id: 'A', text: 'Attack', nextScenario: 'CombatMinotaur' },
         { id: 'B', text: 'Run', nextScenario: 1 },
         { id: 'C', text: 'Test3', nextScenario: 8 },
         { id: 'D', text: 'Turn Back', nextScenario: 1 },
@@ -107,6 +107,28 @@ export default function GameScenarios() {
         { id: 'D', text: 'Armband of Strength', action: () => updateStats({ strength: playerStats.strength + 5}), nextScenario: 'MainHallway' },
       ],
     },
+    {
+      id: 'VictoryGoblin',
+      image: Image.resolveAssetSource(forestImage).uri,
+      question: 'You have defeated the Goblin! What do you do now?',
+      choices: [
+        { id: 'A', text: 'Continue', nextScenario: 'MainHallway' },
+        { id: 'B', text: 'Run', nextScenario: 1 },
+        { id: 'C', text: 'Test3', nextScenario: 8 },
+        { id: 'D', text: 'Turn Back', nextScenario: 1 },
+      ],
+    },
+    {
+      id: 'VictoryMinotaur',
+      image: Image.resolveAssetSource(forestImage).uri,
+      question: 'You have defeated the Minotaur! What do you do now?',
+      choices: [
+        { id: 'A', text: 'Continue', nextScenario: 'MainHallway' },
+        { id: 'B', text: 'Run', nextScenario: 1 },
+        { id: 'C', text: 'Test3', nextScenario: 8 },
+        { id: 'D', text: 'Turn Back', nextScenario: 1 },
+      ],
+    }
   ];
   return { scenarios, updateStats, playerStats };
 }
