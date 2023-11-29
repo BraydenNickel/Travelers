@@ -6,9 +6,6 @@ import { StyleSheet } from 'react-native';
 import GameScenarios from '../components/GameScenarios';
 import ChoiceButton from '../layout/ChoiceButton';
 
-// Combat component
-import CombatScreen from '../components/GoblinScreen';
-import PlayerStats from '../components/PlayerStats';
 
 function GameScreen({ navigation }) {
     const [currentScenario, setCurrentScenario] = useState('GameStart');

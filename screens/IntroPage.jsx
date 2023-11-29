@@ -29,19 +29,19 @@ const styles = StyleSheet.create({
     fontSize: 35,
     marginVertical: 20,
     textAlign: 'center',
-    fontFamily: 'MedievalSharp-Regular'
+    fontFamily: 'MedievalSharp-Regular',
   },
   button: {
     color: 'white',
     fontSize: 30,
     marginVertical: 10,
-    fontFamily: 'MedievalSharp-Regular'
+    fontFamily: 'MedievalSharp-Regular',
   },
   image: {
     justifyContent: 'flex-start',
     width: '75%',
-    height: '50%'
-  }
+    height: '50%',
+  },
 });
 
 export default IntroPage;

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Image, Button, Text } from 'react-native';
+import { View, Image, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import logoTextImage from '../assets/img/logo.png';
 import { TouchableOpacity } from 'react-native-gesture-handler';
