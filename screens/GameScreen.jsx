@@ -12,7 +12,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 >>>>>>> Stashed changes
 
 function GameScreen({ navigation }) {
+<<<<<<< Updated upstream
     const [currentScenario, setCurrentScenario] = useState(0);
+=======
+    const [currentScenario, setCurrentScenario] = useState('BeginGame');
+>>>>>>> Stashed changes
     const scenarios = GameScenarios();
 
   
@@ -117,6 +121,7 @@ const styles = StyleSheet.create({
     },
     question: {
         color: 'white',
+<<<<<<< Updated upstream
         fontFamily: 'MedievalSharp-Regular', // not working
         textAlign: 'center',
         fontSize: 36,
@@ -128,6 +133,14 @@ const styles = StyleSheet.create({
         width: 310,
         marginVertical: 10,
         marginHorizontal: 50,
+=======
+        fontFamily: 'MedievalSharp-Regular', 
+        textAlign: 'justify',
+        fontSize: 24,
+        marginVertical: 20,
+        marginTop: 150,
+        marginHorizontal: 10,
+>>>>>>> Stashed changes
     },
 });
 
