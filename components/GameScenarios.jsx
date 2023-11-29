@@ -31,10 +31,10 @@ export default function gameScenarios() {
     image: Image.resolveAssetSource(forestImage).uri,
     question: 'You are a lone traveler. Upon hearing tales about a dungeon hidden deep in a forest, you decide to head out and look at it yourself. With nothing more than your trusty sword and and your courage with you, you set out and prepare to enter the dungeon.',
     choices: [
-      {id: 'A', text: 'Enter the dungeon', nextScenario: 'MainHallway'},
+      {id: 'A', text: 'Enter the dungeon', nextScenario: 'MainHallwayStart'},
     ],
   }, {
-  id: 'MainHallway', 
+  id: 'MainHallwayStart', 
   image: Image.resolveAssetSource(hallwayImage).uri,
   question: 'You find yourself in a well lit hallway with many branching paths. Looks like you have to pick a path to start exploring the dungeon.' ,
   choices: [
@@ -45,6 +45,17 @@ export default function gameScenarios() {
 
   // Add more scenarios as needed
 }, {
+  id: 'MainHallway', 
+  image: Image.resolveAssetSource(hallwayImage).uri,
+  question: 'You go further inside the dungeon. You are alone with your thoughts. The path keeps going further.' ,
+  choices: [
+    {id: 'A', text: 'Go deeper', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(10) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
+    {id: 'B', text: 'Go left', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(10) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
+    {id: 'C', text: 'Go right', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(10) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway'},
+  ],
+
+  // Add more scenarios as needed
+},{
   id: 'TreasureRoom', //Stat Increase
   image: Image.resolveAssetSource(forestImage).uri,
   question: 'After who knows how long, you finally reach the fabled treasure room. You enter and feel a burst of happiness. You finally reached the end of your journey.',
