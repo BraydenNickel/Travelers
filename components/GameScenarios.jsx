@@ -6,12 +6,15 @@ import forestImage from '../assets/img/forest.jpeg';
 import bullImage from '../assets/img/boss_encounter.jpeg';
 import trinketRoom from '../assets/img/trinket-room.jpeg';
 import Campsite from '../assets/img/campsite.jpeg';
+import TreasureRoom from '../assets/img/treasure_room.jpeg';
 import { Image } from '@rneui/base';
 
 export default function GameScenarios() {
 
   const [playerStats, setPlayerStats] = useState({
+    maxHealth: 100,
     health: 100,
+    maxMana: 50,
     mana: 50,
     strength: 5,
     intelligence: 5,
@@ -31,6 +34,7 @@ export default function GameScenarios() {
       return updatedStats;
     });
   }, []);
+
 
   const getRandomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -66,6 +70,7 @@ export default function GameScenarios() {
         { id: 'A', text: 'Go deeper', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(10) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway' },
         { id: 'B', text: 'Go left', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(10) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway' },
         { id: 'C', text: 'Go right', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(99) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway' },
+        { id: 'D', text: 'Set up Camp', nextScenario: 'Campsite'},
       ],
       // Add more scenarios as needed
     }, {
@@ -76,11 +81,12 @@ export default function GameScenarios() {
         { id: 'A', text: 'Go deeper', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(99) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway' },
         { id: 'B', text: 'Go left', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(99) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway' },
         { id: 'C', text: 'Go right', nextScenario: generateEncounter(40) ? 'EncounterGoblin' : generateEncounter(15) ? 'BossEncounter' : generateEncounter(99) ? 'TrinketRoom' : generateEncounter(5) ? 'TreasureRoom' : 'MainHallway' },
+        { id: 'D', text: 'Set up Camp', nextScenario: 'Campsite'},
       ],
       // Add more scenarios as needed
     }, {
       id: 'TreasureRoom',
-      image: Image.resolveAssetSource(forestImage).uri,
+      image: Image.resolveAssetSource(TreasureRoom).uri,
       question: 'After who knows how long, you finally reach the fabled treasure room. You enter and feel a burst of happiness. You finally reached the end of your journey.',
       choices: [
         { id: 'A', text: 'Continue', nextScenario: 'YouWin' },
@@ -100,8 +106,8 @@ export default function GameScenarios() {
       image: Image.resolveAssetSource(trinketRoom).uri,
       question: 'You enter a room full of trinkets. You feel yourself grow stronger whenever you approach one of them. You can only carry one out with you.',
       choices: [
-        { id: 'A', text: 'HP Ring', action: () => updateStats({ health: playerStats.health + 5}), nextScenario: 'MainHallway' },
-        { id: 'B', text: 'Mana Necklace', action: () => updateStats({ mana: playerStats.mana + 5}), nextScenario: 'MainHallway' },
+        { id: 'A', text: 'HP Ring', action: () => updateStats({ health: playerStats.health + 5, maxHealth: playerStats.maxHealth + 5}), nextScenario: 'MainHallway' },
+        { id: 'B', text: 'Mana Necklace', action: () => updateStats({ mana: playerStats.mana + 5,  maxMana: playerStats.maxMana + 5}), nextScenario: 'MainHallway' },
         { id: 'C', text: 'Crown of Intelligence', action: () => updateStats({ intelligence: playerStats.intelligence + 5 }), nextScenario: 'MainHallway' },
         { id: 'D', text: 'Armband of Strength', action: () => updateStats({ strength: playerStats.strength + 5}), nextScenario: 'MainHallway' },
       ],
@@ -133,11 +139,23 @@ export default function GameScenarios() {
       image: Image.resolveAssetSource(Campsite).uri,
       question: 'You decide to set up camp in one of the abandoned rooms. You start a fire and sit near it.',
       choices: [
-        {id: 'A', text: 'Restore Health and Mana'},
+        {id: 'A', text: 'Restore Health and Mana', action: () => updateStats({ health: playerStats.maxHealth , mana: playerStats.maxMana}), nextScenario: 'CampsiteHealed'},
         {id: 'B', text: 'Save Game'},
         {id: 'C', text: 'Return to Dungeon', nextScenario: 'MainHallwayStart'},
       ],
     },
+    {
+      id: 'CampsiteHealed',
+      image: Image.resolveAssetSource(Campsite).uri,
+      question: 'You take a quick nap and feel refreshed. Your health and mana have been restored.',
+      choices: [
+        {id: 'A', text: 'Save Game'},
+        {id: 'B', text: 'Return to Dungeon', nextScenario: 'MainHallwayStart'},
+      ],
+    },
+
+
+
   ];
   return { scenarios, updateStats, playerStats };
 }

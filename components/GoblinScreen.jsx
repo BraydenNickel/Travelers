@@ -5,6 +5,7 @@ import GameScenarios from './GameScenarios';
 import { useFocusEffect } from '@react-navigation/native';
 import ChoiceButton from '../layout/ChoiceButton';
 import goblinImage from '../assets/img/enemy_encounter.jpeg';
+import VictoryScreen from '../screens/VictoryScreen';
 
 
 const GoblinScreen = ({ navigation, route} ) => {
@@ -95,6 +96,19 @@ const GoblinScreen = ({ navigation, route} ) => {
         setCanPlayerAttack(true); // Enable player's attack
       };
 
+      const handleReturnToMainHallway = () => {
+        const mainHallwayScenario = scenarios.find((scenario) => scenario.id === 'MainHallway');
+
+        if (mainHallwayScenario) {
+          updateStats(playerStats);
+          navigation.navigate('MainHallway', {scenario: mainHallwayScenario});
+          console.log('MainHallway Scenario Found.');
+        } else {
+          console.error("Scenario 'MainHallway' not found.");
+        }
+      };
+  
+
       useEffect(() => {
         if (goblinHealth === 0) {
             const nextScenarioId = 'VictoryGoblin';
@@ -103,7 +117,7 @@ const GoblinScreen = ({ navigation, route} ) => {
             if (nextScenario) {
                 updateStats(playerStats);
               // Replace the current screen with the Victory scenario
-              navigation.navigate('VictoryScreen');
+              navigation.navigate('VictoryScreen', { scenario: nextScenario });
             } else {
                 console.error(`Scenario with ID ${nextScenarioId} not found.`);
             }
@@ -157,6 +171,7 @@ const GoblinScreen = ({ navigation, route} ) => {
                 ))}
             </View>
           </ScrollView>
+              {goblinHealth === 0 && <VictoryScreen onReturnToMainHallway={handleReturnToMainHallway} />}
         </View>
     );
 };

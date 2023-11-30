@@ -1,25 +1,19 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import ChoiceButton from '../layout/ChoiceButton';
 
-const VictoryScreen = ({ navigation }) => {
-  const handlePlayAgain = () => {
-    navigation.navigate('IntroPage');
+const VictoryScreen = ({ navigation, onReturnToMainHallway}) => {
+  const handleReturnToGame = () => {
+    onReturnToMainHallway();
   };
 
-  const handleExit = () => {
-    navigation.navigate('HomeScreen');
-  };
+  console.log('VictoryScreen rendered');
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Victory!</Text>
-      <TouchableOpacity style={styles.button} onPress={handlePlayAgain}>
-        <Text style={styles.buttonText}>Play Again</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleExit}>
-        <Text style={styles.buttonText}>Exit</Text>
-      </TouchableOpacity>
+      <ChoiceButton title='Continue' onPress={handleReturnToGame}/>
     </View>
   );
 };
