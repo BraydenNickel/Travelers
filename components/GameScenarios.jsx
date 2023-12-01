@@ -204,9 +204,8 @@ export default function GameScenarios( { navigate }) {
     image: Image.resolveAssetSource(MagicalForestRest).uri,
     question: 'You stumble upon a campsite. You decide to rest for a bit.',
     choices: [
-      { id: 'A', text: 'Restore Health and Mana', action: () => updateStats({ health: playerStats.maxHealth , mana: playerStats.maxMana}), nextScenario: 'MagicalForestRestHealed'},
-      { id: 'B', text: 'Save Game'},
-      { id: 'C', text: 'Return to Forest', nextScenario: 'TreePath'},
+      { id: 'A', text: 'Restore Health and Mana', action: () => updateStats({ health: playerStats.maxHealth , mana: playerStats.maxMana}), nextScenario: 'TreePath'},
+      { id: 'B', text: 'Return to Forest', nextScenario: 'TreePath'},
     ],
    },
    {
