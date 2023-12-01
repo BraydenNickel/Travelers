@@ -17,9 +17,10 @@ function GameScreen({ navigation }) {
         // check if the current scenario is a combat scenario
         if (currentScenarioData.choices[choiceIndex].nextScenario === 'CombatGoblin') {
             navigation.navigate('GoblinScreen', { playerStats: playerStats, updateStats: updateStats, currentScenario: currentScenario });
-        }
-        else if (currentScenarioData.choices[choiceIndex].nextScenario === 'CombatMinotaur'){
+        } else if (currentScenarioData.choices[choiceIndex].nextScenario === 'CombatMinotaur') {
             navigation.navigate('MinotaurScreen', { playerStats: playerStats, updateStats: updateStats, currentScenario: currentScenario });
+        } else if (currentScenarioData.choices[choiceIndex].nextScenario === 'GameOver') {
+            navigation.navigate('GameOverScreen', { playerStats: playerStats, updateStats: updateStats, currentScenario: currentScenario });
         } else {
             const nextScenario = currentScenarioData.choices[choiceIndex].nextScenario;
             setCurrentScenario(nextScenario);
