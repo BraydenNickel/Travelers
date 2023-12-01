@@ -5,7 +5,7 @@ import GameScenarios from './GameScenarios';
 import { useFocusEffect } from '@react-navigation/native';
 import ChoiceButton from '../layout/ChoiceButton';
 import Druid from '../assets/img/Druid.png';
-import druidBg from '../assets/img/DruidForest_bg.jpg'
+import druidBg from '../assets/img/DruidForest_bg.jpg';
 
 const DruidScreen = ({ navigation, route }) => {
   const { scenarios } = GameScenarios({ navigate: navigation.navigate });

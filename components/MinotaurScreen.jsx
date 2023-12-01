@@ -4,7 +4,7 @@ import { View, Image, Text, StyleSheet, ScrollView, Animated, Easing } from 'rea
 import GameScenarios from './GameScenarios';
 import { useFocusEffect } from '@react-navigation/native';
 import bull from '../assets/img/BullMan.png';
-import bullBg from '../assets/img/bull_encounterBg.jpg'
+import bullBg from '../assets/img/bull_encounterBg.jpg';
 import ChoiceButton from '../layout/ChoiceButton';
 
 const MinotaurScreen = ({ navigation, route} ) => {
