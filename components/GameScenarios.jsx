@@ -18,7 +18,7 @@ import ForestDeath from '../assets/img/ForestDeath.jpeg';
 import TreeSpiritForest from '../assets/img/TreeSpiritForest.jpeg';
 import { Image } from '@rneui/base';
 
-export default function GameScenarios( { navigate }) {
+export default function GameScenarios( { } ) {
 
   const [playerStats, setPlayerStats] = useState({
     maxHealth: 100,
@@ -30,6 +30,7 @@ export default function GameScenarios( { navigate }) {
     experience: 0,
     level: 1,
   });
+
 
   const updateStats = useCallback((action) => {
     setPlayerStats((prevStats) => {

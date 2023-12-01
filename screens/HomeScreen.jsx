@@ -14,18 +14,17 @@ const HomeScreen = ({ navigation }) => {
   const startGame = () => {
     navigation.navigate('IntroPage');
     console.log('New Game started');
-  }
-  /*const startNewGame = () => {
+  };  /*const startNewGame = () => {
     navigation.navigate('IntroPage');
     console.log('New Game started');
   };
-  */
+
 
   const loadSavedGame = () => {
     // Add logic for loading a saved game
     console.log('Load Game');
   };
-
+*/
   const breatheAnimation = (scale) => {
     return Animated.sequence([
       Animated.timing(scale, {
