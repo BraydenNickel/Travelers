@@ -178,9 +178,9 @@ export default function GameScenarios() {
     image: Image.resolveAssetSource(TreePath).uri,
     question: 'You see a path that never ends. Do you continue forward or take an unknown path?',
     choices: [
-      { id: 'A', text: 'Stay on the path', nextScenario: generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(2) ? 'TreeSpiritForestAngered' : generateEncounter(10) ? 'ForestDeath' : 'TreePath' },
-      { id: 'B', text: 'Go left', nextScenario: generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(2) ? 'TreeSpiritForestAngered' : generateEncounter(10) ? 'ForestDeath' : 'TreePath' },
-      { id: 'C', text: 'Go right', nextScenario: generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(2) ? 'TreeSpiritForestAngered' : generateEncounter(10) ? 'ForestDeath' : 'TreePath' },
+      { id: 'A', text: 'Stay on the path', nextScenario: generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(2) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
+      { id: 'B', text: 'Go left', nextScenario: generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(2) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
+      { id: 'C', text: 'Go right', nextScenario: generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(2) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
       { id: 'D', text: 'Set up camp', nextScenario: 'MagicalForestRest' },
     ],
    },
@@ -199,10 +199,10 @@ export default function GameScenarios() {
     image: Image.resolveAssetSource(ChestForest).uri,
     question: 'You see a chest in the distance. You decide to open it.',
     choices: [
-      { id: 'A', text: 'HP Ring (+10 HP)', action: () => updateStats({ health: playerStats.health + 10, maxHealth: playerStats.maxHealth + 5}), nextScenario: generateEncounter(25) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(3) ? 'TreeSpiritForestAngered' : generateEncounter(10) ? 'ForestDeath' : 'TreePath' },
-      { id: 'B', text: 'Mana Necklace (+10 Mana)', action: () => updateStats({ mana: playerStats.mana + 10,  maxMana: playerStats.maxMana + 5}), nextScenario: generateEncounter(25) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(3) ? 'TreeSpiritForestAngered' : generateEncounter(10) ? 'ForestDeath' : 'TreePath' },
-      { id: 'C', text: 'Crown of Intelligence (+5 INT)', action: () => updateStats({ intelligence: playerStats.intelligence + 5 }), nextScenario: generateEncounter(25) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(3) ? 'TreeSpiritForestAngered' : generateEncounter(10) ? 'ForestDeath' : 'TreePath' },
-      { id: 'D', text: 'Armband of Strength (+5 STR)', action: () => updateStats({ strength: playerStats.strength + 5}), nextScenario: generateEncounter(25) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(3) ? 'TreeSpiritForestAngered' : generateEncounter(10) ? 'ForestDeath' : 'TreePath' },
+      { id: 'A', text: 'HP Ring (+10 HP)', action: () => updateStats({ health: playerStats.health + 10, maxHealth: playerStats.maxHealth + 5}), nextScenario: generateEncounter(25) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(3) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
+      { id: 'B', text: 'Mana Necklace (+10 Mana)', action: () => updateStats({ mana: playerStats.mana + 10,  maxMana: playerStats.maxMana + 5}), nextScenario: generateEncounter(25) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(3) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
+      { id: 'C', text: 'Crown of Intelligence (+5 INT)', action: () => updateStats({ intelligence: playerStats.intelligence + 5 }), nextScenario: generateEncounter(25) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(3) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
+      { id: 'D', text: 'Armband of Strength (+5 STR)', action: () => updateStats({ strength: playerStats.strength + 5}), nextScenario: generateEncounter(25) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(3) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
     ],
    },
    {
@@ -211,7 +211,7 @@ export default function GameScenarios() {
     question: 'You found the a magical Fairy that offers to transport to you to safety. Do you accept?',
     choices: [
       { id: 'A', text: 'Accept the offer', nextScenario: 'MainHallway' },
-      { id: 'B', text: 'Continue exploring', nextScenario: generateEncounter(25) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(3) ? 'TreeSpiritForestAngered' : generateEncounter(10) ? 'ForestDeath' : 'TreePath'},
+      { id: 'B', text: 'Continue exploring', nextScenario: generateEncounter(25) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(3) ? 'TreeSpiritForestAngered' : 'TreePath'},
     ],
    },
    {
@@ -277,7 +277,7 @@ export default function GameScenarios() {
     image: Image.resolveAssetSource(DruidForest).uri,
     question: 'You talk to the druid. He offers to teach you magic and increase your intelligence. You fail to learn anything.',
     choices: [
-      { id: 'A', text: 'Continue', nextScenario: generateEncounter(35) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(2) ? 'TreeSpiritForestAngered' : generateEncounter(10) ? 'ForestDeath' : 'TreePath' },
+      { id: 'A', text: 'Continue', nextScenario: generateEncounter(35) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(2) ? 'TreeSpiritForestAngered' : 'TreePath' },
     ],
    },
    {
