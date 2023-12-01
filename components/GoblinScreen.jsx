@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Image, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Image, Text, StyleSheet, ScrollView, Animated, Easing } from 'react-native';
 import GameScenarios from './GameScenarios';
 import { useFocusEffect } from '@react-navigation/native';
 import ChoiceButton from '../layout/ChoiceButton';
-import goblinImage from '../assets/img/enemy_encounter.jpeg';
+import Goblin from '../assets/img/goblin.png';
+import goblinBg from '../assets/img/enemy_encounterbg.jpg';
 
 
 const GoblinScreen = ({ navigation, route} ) => {
@@ -15,6 +16,7 @@ const GoblinScreen = ({ navigation, route} ) => {
     const [goblinHealth, setGoblinHealth] = useState(50);
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
     const [canPlayerAttack, setCanPlayerAttack] = useState(true);
+    const [damageAnimation] = useState(new Animated.Value(0));
 
     useEffect(() => {
         // Call updateStats when the component mounts
@@ -33,6 +35,17 @@ const GoblinScreen = ({ navigation, route} ) => {
         updateStats(playerStats);
     }, [updateStats, playerStats]);
 
+    //Causes monster to shake when damaged by player
+    const monsterDamage = () => {
+      Animated.timing(damageAnimation, {
+        toValue: 1,
+        duration: 500,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start(() => {
+        damageAnimation.setValue(0);
+      });
+    };
 
     const handleAttack = () => {
         if (!canPlayerAttack) {
@@ -43,6 +56,9 @@ const GoblinScreen = ({ navigation, route} ) => {
         addLog(`Player attacks for ${playerDamage} damage.`, 'player');
         setIsPlayerTurn(false); //Switch to goblin's turn
         setCanPlayerAttack(false); // Disable player's attack
+
+        //Trigger damage animation
+        monsterDamage();
 
             // Log playerStats every attack
         console.log('Player Stats:', playerStats);
@@ -63,6 +79,9 @@ const GoblinScreen = ({ navigation, route} ) => {
           addLog(`Player casts magic for ${magicDamage} damage.`, 'magic');
           setIsPlayerTurn(false); //Switch to goblin's turn
           setCanPlayerAttack(false); // Disable player's attack
+
+          //Trigger damage animation
+          monsterDamage();
               // Log playerStats every attack
           console.log('Player Stats:', playerStats);
 
@@ -120,7 +139,26 @@ const GoblinScreen = ({ navigation, route} ) => {
 
     return (
         <View style={styles.container}>
-          <Image source = {goblinImage} style={styles.Image} />
+          <View style={styles.imageContainer}>
+            <Image source={goblinBg} style={styles.bottomImage} />
+
+            <Animated.Image
+              source={Goblin}
+              style={[
+                styles.topImage,
+                {
+                  transform: [
+                    {
+                      translateX: damageAnimation.interpolate({
+                        inputRange: [0,0.2,0.4,0.6,0.8,1],
+                        outputRange: [0,-10,10,-10,10,0],
+                      }),
+                    },
+                  ],
+                },
+              ]}
+              />
+          </View>
           <View style={styles.informationContainer}>
           <Text style={styles.informationEnemy}><Text style={styles.goblin}>Goblin</Text> Health: <Text style={styles.health}>{goblinHealth}</Text></Text>
             <Text style={styles.information}>Player Health: <Text style={styles.health}>{playerStats.health}</Text></Text>
@@ -160,11 +198,34 @@ const styles = StyleSheet.create({
   container : {
     flex: 1,
     backgroundColor: 'rgba(12,12,12,0.90)',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingLeft: 15,
     paddingTop: 20,
     paddingRight: 15,
+  },
+
+  imageContainer : {
+    position: 'relative',
+    width: '100%',
+    height: '50%',
+  },
+
+  bottomImage : {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+
+  topImage : {
+    position: 'absolute',
+    top: '30%',
+    left : '25%',
+    right: 0,
+    bottom: 0,
+    width: '50%',
+    height: '50%',
+    resizeMode: 'cover',
   },
 
   information: {
@@ -210,7 +271,9 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer : {
-    alignSelf: 'center',
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
     marginTop: 10,
     marginRight: 15,
   },
@@ -226,16 +289,6 @@ const styles = StyleSheet.create({
     maxHeight: 60,
     marginTop: 20,
   },
-  Image: {
-    alignSelf: 'center',
-    width: '90%',
-    height: '35%',
-    position: 'relative',
-    marginTop: 20,
-    marginBottom: 20,
-},
-
-
 });
 
 export default GoblinScreen;

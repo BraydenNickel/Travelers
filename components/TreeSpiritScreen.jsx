@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Image, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Image, Text, StyleSheet, ScrollView, Animated, Easing } from 'react-native';
 import GameScenarios from './GameScenarios';
 import { useFocusEffect } from '@react-navigation/native';
 import ChoiceButton from '../layout/ChoiceButton';
-import TreeSpiritForest from '../assets/img/TreeSpiritForest.jpeg';
+import TreeSpirit from '../assets/img/TreeSpirit.png';
+import TreeSpiritBg from '../assets/img/TreeSpiritForest_bg.jpg';
 
 const TreeSpiritScreen = ({ navigation, route }) => {
   const { scenarios } = GameScenarios({ navigate: navigation.navigate });
@@ -14,6 +15,7 @@ const TreeSpiritScreen = ({ navigation, route }) => {
   const [treeSpiritHealth, setTreeSpiritHealth] = useState(50); // Updated variable name
   const [isPlayerTurn, setIsPlayerTurn] = useState(true);
   const [canPlayerAttack, setCanPlayerAttack] = useState(true);
+  const [damageAnimation] = useState(new Animated.Value(0));
 
   useEffect(() => {
     // Call updateStats when the component mounts
@@ -32,6 +34,19 @@ const TreeSpiritScreen = ({ navigation, route }) => {
     updateStats(playerStats);
   }, [updateStats, playerStats]);
 
+   //Causes monster to shake when damaged by player
+   const monsterDamage = () => {
+    Animated.timing(damageAnimation, {
+      toValue: 1,
+      duration: 500,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start(() => {
+      damageAnimation.setValue(0);
+    });
+  };
+
+
   const handleAttack = () => {
     if (!canPlayerAttack) {
       return;
@@ -41,6 +56,9 @@ const TreeSpiritScreen = ({ navigation, route }) => {
     addLog(`Player attacks for ${playerDamage} damage.`, 'player');
     setIsPlayerTurn(false); // Switch to TreeSpirit's turn
     setCanPlayerAttack(false); // Disable player's attack
+
+     //Trigger damage animation
+     monsterDamage();
 
     // Log playerStats every attack
     console.log('Player Stats:', playerStats);
@@ -59,6 +77,10 @@ const TreeSpiritScreen = ({ navigation, route }) => {
       addLog(`Player casts magic for ${magicDamage} damage.`, 'magic');
       setIsPlayerTurn(false); // Switch to TreeSpirit's turn
       setCanPlayerAttack(false); // Disable player's attack
+
+       //Trigger damage animation
+       monsterDamage();
+
       // Log playerStats every attack
       console.log('Player Stats:', playerStats);
 
@@ -113,7 +135,26 @@ const TreeSpiritScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={TreeSpiritForest} style={styles.Image} />
+      <View style={styles.imageContainer}>
+            <Image source={TreeSpiritBg} style={styles.bottomImage} />
+
+            <Animated.Image
+              source={TreeSpirit}
+              style={[
+                styles.topImage,
+                {
+                  transform: [
+                    {
+                      translateX: damageAnimation.interpolate({
+                        inputRange: [0,0.2,0.4,0.6,0.8,1],
+                        outputRange: [0,-10,10,-10,10,0],
+                      }),
+                    },
+                  ],
+                },
+              ]}
+              />
+          </View>
       <View style={styles.informationContainer}>
         <Text style={styles.informationEnemy}><Text style={styles.treeSpirit}>TreeSpirit</Text> Health: <Text style={styles.health}>{treeSpiritHealth}</Text></Text>
         <Text style={styles.information}>Player Health: <Text style={styles.health}>{playerStats.health}</Text></Text>
@@ -148,14 +189,37 @@ const TreeSpiritScreen = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  container : {
     flex: 1,
     backgroundColor: 'rgba(12,12,12,0.90)',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingLeft: 15,
     paddingTop: 20,
     paddingRight: 15,
+  },
+
+  imageContainer : {
+    position: 'relative',
+    width: '100%',
+    height: '50%',
+  },
+
+  bottomImage : {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+
+  topImage : {
+    position: 'absolute',
+    top: 0,
+    left : '25%',
+    right: 0,
+    bottom: 0,
+    width: '50%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 
   information: {
@@ -174,6 +238,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     paddingRight: 15,
   },
+
   health: {
     color: 'red',
   },
@@ -194,36 +259,30 @@ const styles = StyleSheet.create({
     color: 'rgba(114,34,16,1)',
   },
 
-  informationContainer: {
+  informationContainer : {
     marginBottom: 25,
     width: '100%',
     borderColor: 'white',
   },
 
-  buttonContainer: {
-    alignSelf: 'center',
+  buttonContainer : {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
     marginTop: 10,
     marginRight: 15,
   },
 
-  logInformation: {
+  logInformation : {
     color: 'white',
     fontSize: 20,
     fontFamily: 'MedievalSharp-Regular',
   },
 
-  logScrollContainer: {
+  logScrollContainer : {
     flex: 1,
     maxHeight: 60,
     marginTop: 20,
-  },
-  Image: {
-    alignSelf: 'center',
-    width: '90%',
-    height: '35%',
-    position: 'relative',
-    marginTop: 20,
-    marginBottom: 20,
   },
 });
 
