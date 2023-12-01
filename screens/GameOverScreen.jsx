@@ -15,8 +15,8 @@ const GameOverScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Game Over</Text>
-      <ChoiceButton title='Play Again' onPress={handleTryAgain}/>
-      <ChoiceButton title='Main Menu' onPress={handleMainMenu}/>
+      <ChoiceButton title="Play Again" onPress={handleTryAgain}/>
+      <ChoiceButton title="Main Menu" onPress={handleMainMenu}/>
     </View>
   );
 };

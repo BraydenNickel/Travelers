@@ -5,13 +5,11 @@ import { View, Image, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import GameScenarios from '../components/GameScenarios';
 import ChoiceButton from '../layout/ChoiceButton';
-import VictoryScreen from './VictoryScreen';
-import GoblinScreen from '../components/GoblinScreen';
 
 
 function GameScreen({ navigation }) {
     const [currentScenario, setCurrentScenario] = useState('GameStart');
-    const { scenarios, playerStats, updateStats, handleScenarioAction} = GameScenarios({
+    const { scenarios, playerStats, updateStats} = GameScenarios({
         navigate: navigation.navigate,
     });
 
@@ -25,6 +23,12 @@ function GameScreen({ navigation }) {
             navigation.navigate('MinotaurScreen', { playerStats: playerStats, updateStats: updateStats, currentScenario: currentScenario });
         } else if (currentScenarioData.choices[choiceIndex].nextScenario === 'GameOver') {
             navigation.navigate('GameOverScreen', { playerStats: playerStats, updateStats: updateStats, currentScenario: currentScenario });
+        } else if (currentScenarioData.choices[choiceIndex].nextScenario === 'YouWin') {
+            navigation.navigate('VictoryScreen', { playerStats: playerStats, updateStats: updateStats, currentScenario: currentScenario });
+        } else if (currentScenarioData.choices[choiceIndex].nextScenario === 'CombatDruid') {
+            navigation.navigate('DruidScreen', { playerStats: playerStats, updateStats: updateStats, currentScenario: currentScenario });
+        } else if (currentScenarioData.choices[choiceIndex].nextScenario === 'CombatTreeSpirit') {
+            navigation.navigate('TreeSpiritScreen', { playerStats: playerStats, updateStats: updateStats, currentScenario: currentScenario });
         } else {
             const nextScenario = currentScenarioData.choices[choiceIndex].nextScenario;
             setCurrentScenario(nextScenario);

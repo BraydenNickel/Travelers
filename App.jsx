@@ -16,6 +16,8 @@ import GoblinScreen from './components/GoblinScreen';
 import MinotaurScreen from './components/MinotaurScreen';
 import VictoryScreen from './screens/VictoryScreen';
 import GameOverScreen from './screens/GameOverScreen';
+import DruidScreen from './components/DruidScreen';
+import TreeSpiritScreen from './components/TreeSpiritScreen';
 
 
 
@@ -32,6 +34,8 @@ const App = () => {
         <Stack.Screen name="MinotaurScreen" component={MinotaurScreen} />
         <Stack.Screen name="VictoryScreen" component={VictoryScreen} />
         <Stack.Screen name="GameOverScreen" component={GameOverScreen} />
+        <Stack.Screen name="DruidScreen" component={DruidScreen} />
+        <Stack.Screen name="TreeSpiritScreen" component={TreeSpiritScreen} />
         </Stack.Navigator>
     </NavigationContainer>
   );

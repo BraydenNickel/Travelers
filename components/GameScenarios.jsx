@@ -53,31 +53,24 @@ export default function GameScenarios( { navigate }) {
     return getRandomInt(1, 100) <= chance;
   };
 
-  const handleScenarioAction = (action, params) => {
-    if (action === 'NavigateToMainHallway') {
-      const mainHallwayScenario = scenarios.find(
-        (scenario) => scenario.id === 'MainHallway'
-      );
-
-      if (mainHallwayScenario) {
-        updateStats(playerStats);
-        navigation.navigate('MainHallway', { scenario: mainHallwayScenario});
-        console.log('MainHallway Scenario found');
-      } else {
-        console.error("Scenario 'MainHallway' not found.");
+  const calculateNextScenario = () => {
+    const scenarioProbabilities = [
+      { scenario: 'ChestForest', chance: 28 },
+      { scenario: 'FairyPortal', chance: 1 },
+      { scenario: 'ForestAnimals', chance: 28 },
+      { scenario: 'DruidForest', chance: 22 },
+      { scenario: 'TreeSpiritForest', chance: 10 },
+      { scenario: 'TreeSpiritForestAngered', chance: 4 },
+      { scenario: 'ForestDeath', chance: 7 },
+    ];
+    const totalChances = scenarioProbabilities.reduce((sum, { chance }) => sum + chance, 0);
+    const randomNumber = getRandomInt(1, totalChances);
+    let cumulativeProbability = 0;
+    for (const { scenario, chance } of scenarioProbabilities) {
+      cumulativeProbability += chance;
+      if (randomNumber <= cumulativeProbability) {
+        return scenario;
       }
-    }
-  };
-
-  const handleReturnToMainHallway = () => {
-    const mainHallwayScenario = scenarios.find((scenario) => scenario.id === 'MainHallway');
-
-    if (mainHallwayScenario) {
-      updateStats(playerStats);
-      navigate('MainHallway', { scenario: mainHallwayScenario });
-      console.log('MainHallway Scenario Found.');
-    } else {
-      console.error("Scenario 'MainHallway' not found.");
     }
   };
 
@@ -89,15 +82,13 @@ export default function GameScenarios( { navigate }) {
       choices: [
         { id: 'A', text: 'Attack', nextScenario: 'CombatGoblin' },
         { id: 'B', text: 'Run', nextScenario: 'MainHallwayStart' },
-        { id: 'C', text: 'Test3', nextScenario: 8 },
-        { id: 'D', text: 'Turn Back', nextScenario: 'MainHallway' },
       ],
     }, {
       id: 'GameStart',
       image: Image.resolveAssetSource(MagicBook).uri,
       question: 'You are a lone traveler. While exploring an ancient library, you stumble upon a dusty, forgotten book hidden amongst the shelves. Intrigued, you open the cover and find yourself face-to-face with a shimmering portal. The moment you step through, you are transported to a unknown realm.',
       choices: [
-        { id: 'A', text: 'Continue', nextScenario: generateEncounter(50) ? 'MainHallwayStart' : generateEncounter(50) ? 'MagicalForest' : 'GameStart' },
+        { id: 'A', text: 'Continue', nextScenario: generateEncounter(51) ? 'MainHallwayStart' : 'MagicalForest' },
       ],
     }, {
       id: 'MainHallwayStart',
@@ -134,9 +125,7 @@ export default function GameScenarios( { navigate }) {
       question: 'You enter a well lit hallway. You feel a heavy pressure in the air. A loud roar suddenly assaults your hearing. A Minotaur appears and blocks your path.',
       choices: [
         { id: 'A', text: 'Attack', nextScenario: 'CombatMinotaur' },
-        { id: 'B', text: 'Run', nextScenario: 1 },
-        { id: 'C', text: 'Test3', nextScenario: 8 },
-        { id: 'D', text: 'Turn Back', nextScenario: 1 },
+        { id: 'B', text: 'Run',  nextScenario: 'MainHallwayStart' },
       ],
     }, {
       id: 'TrinketRoom',
@@ -177,8 +166,7 @@ export default function GameScenarios( { navigate }) {
       question: 'You decide to set up camp in one of the abandoned rooms. You start a fire and sit near it.',
       choices: [
         {id: 'A', text: 'Restore Health and Mana', action: () => updateStats({ health: playerStats.maxHealth , mana: playerStats.maxMana}), nextScenario: 'CampsiteHealed'},
-        {id: 'B', text: 'Save Game'},
-        {id: 'C', text: 'Return to Dungeon', nextScenario: 'MainHallwayStart'},
+        {id: 'B', text: 'Return to Dungeon', nextScenario: 'MainHallwayStart'},
       ],
     },
     {
@@ -186,8 +174,7 @@ export default function GameScenarios( { navigate }) {
       image: Image.resolveAssetSource(Campsite).uri,
       question: 'You take a quick nap and feel refreshed. Your health and mana have been restored.',
       choices: [
-        {id: 'A', text: 'Save Game'},
-        {id: 'B', text: 'Return to Dungeon', nextScenario: 'MainHallwayStart'},
+        {id: 'A', text: 'Return to Dungeon', nextScenario: 'MainHallwayStart'},
       ],
     },
     /*
@@ -206,9 +193,9 @@ export default function GameScenarios( { navigate }) {
     image: Image.resolveAssetSource(TreePath).uri,
     question: 'You see a path that never ends. Do you continue forward or take an unknown path?',
     choices: [
-      { id: 'A', text: 'Stay on the path', nextScenario: generateEncounter(26) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(26) ? 'ForestAnimals' : generateEncounter(22) ? 'DruidForest' : generateEncounter(10) ? 'TreeSpiritForest' : generateEncounter(4) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
-      { id: 'B', text: 'Go left', nextScenario: generateEncounter(26) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(26) ? 'ForestAnimals' : generateEncounter(22) ? 'DruidForest' : generateEncounter(10) ? 'TreeSpiritForest' : generateEncounter(4) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
-      { id: 'C', text: 'Go right', nextScenario: generateEncounter(26) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(26) ? 'ForestAnimals' : generateEncounter(22) ? 'DruidForest' : generateEncounter(10) ? 'TreeSpiritForest' : generateEncounter(4) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
+      { id: 'A', text: 'Stay on the path', nextScenario: calculateNextScenario() },
+      { id: 'B', text: 'Go left', nextScenario: calculateNextScenario() },
+      { id: 'C', text: 'Go right', nextScenario: calculateNextScenario() },
       { id: 'D', text: 'Set up camp', nextScenario: 'MagicalForestRest' },
     ],
    },
@@ -238,7 +225,7 @@ export default function GameScenarios( { navigate }) {
     image: Image.resolveAssetSource(FairyPortal).uri,
     question: 'You found the a magical Fairy that offers to transport to you to safety. Do you accept?',
     choices: [
-      { id: 'A', text: 'Accept the offer', nextScenario: 'MainHallway' },
+      { id: 'A', text: 'Accept the offer', nextScenario: 'YouWin' },
       { id: 'B', text: 'Continue exploring', nextScenario: generateEncounter(25) ? 'TreePath' : generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(3) ? 'TreeSpiritForestAngered' : 'TreePath'},
     ],
    },
@@ -366,10 +353,22 @@ export default function GameScenarios( { navigate }) {
       { id: 'A', text: 'Continue', nextScenario: 'CombatTreeSpirit' },
     ],
    },
-
-
-
-
+   {
+    id: 'VictoryTreeSpirit',
+    image: Image.resolveAssetSource(forestImage).uri,
+    question: 'You have defeated the Tree Spirit! What do you do now?',
+    choices: [
+      { id: 'A', text: 'Continue', nextScenario: 'TreePath' },
+    ],
+   },
+   {
+    id: 'VictoryDruid',
+    image: Image.resolveAssetSource(forestImage).uri,
+    question: 'You have defeated the Druid! What do you do now?',
+    choices: [
+      { id: 'A', text: 'Continue', nextScenario: 'TreePath' },
+    ],
+   },
   ];
-  return { scenarios, updateStats, playerStats, handleScenarioAction };
+  return { scenarios, updateStats, playerStats };
 }

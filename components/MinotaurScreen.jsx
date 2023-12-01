@@ -1,14 +1,13 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Image, Button, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Image, Text, StyleSheet, ScrollView } from 'react-native';
 import GameScenarios from './GameScenarios';
 import { useFocusEffect } from '@react-navigation/native';
 import bullImage from '../assets/img/boss_encounter.jpeg';
 import ChoiceButton from '../layout/ChoiceButton';
-import VictoryScreen from '../screens/VictoryScreen';
 
 const MinotaurScreen = ({ navigation, route} ) => {
-    const { scenarios, handleScenarioAction } = GameScenarios({ navigate: navigation.navigate });
+    const { scenarios } = GameScenarios({ navigate: navigation.navigate });
     const { playerStats: initialPlayerStats, updateStats } = route.params;
     const [playerStats, setPlayerStats] = useState(initialPlayerStats);
     const [combatLog, setCombatLog] = useState([]);
@@ -68,10 +67,7 @@ const MinotaurScreen = ({ navigation, route} ) => {
 
           handleMinotaurAttack(); // Minotaur's turn
         } else {
-          setCombatLog((prevLog) => [
-            ...prevLog,
-            'Not enough mana to cast magic.',
-          ]);
+          addLog('Not enough mana to cast magic.', 'player');
         }
       };
 
@@ -109,15 +105,6 @@ const MinotaurScreen = ({ navigation, route} ) => {
             navigation.navigate('GameOverScreen');
         }
 
-        if (!isPlayerTurn) {
-            // Minotaur's turn
-            console.log("Player's Current Stats:", playerStats); // Print player's current stats
-            const minotaurTimeout = setTimeout(() => {
-                handleMinotaurAttack();
-            }, 1000);
-
-            return () => clearTimeout(minotaurTimeout);
-        }
     }, [minotaurHealth, playerStats, isPlayerTurn, navigation, scenarios, updateStats]);
 
     const scrollViewRef = useRef();
@@ -150,8 +137,8 @@ const MinotaurScreen = ({ navigation, route} ) => {
             {combatLog.map((log, index) => (
                 <Text style={[
                   styles.logInformation,
-                  log.source === 'player' 
-                  ? styles.playerLog 
+                  log.source === 'player'
+                  ? styles.playerLog
                   : log.source === 'bull'
                   ? styles.bullLog
                   : styles.magicLog,
@@ -163,8 +150,6 @@ const MinotaurScreen = ({ navigation, route} ) => {
             ))}
         </View>
       </ScrollView>
-          {minotaurHealth === 0 && <VictoryScreen onReturnToMainHallway={handleReturnToMainHallway} />}
-
     </View>
 );
 };

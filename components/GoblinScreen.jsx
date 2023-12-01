@@ -5,11 +5,10 @@ import GameScenarios from './GameScenarios';
 import { useFocusEffect } from '@react-navigation/native';
 import ChoiceButton from '../layout/ChoiceButton';
 import goblinImage from '../assets/img/enemy_encounter.jpeg';
-import VictoryScreen from '../screens/VictoryScreen';
 
 
 const GoblinScreen = ({ navigation, route} ) => {
-    const { scenarios,handleScenarioAction } = GameScenarios({ navigate: navigation.navigate });
+    const { scenarios } = GameScenarios({ navigate: navigation.navigate });
     const { playerStats: initialPlayerStats, updateStats } = route.params;
     const [playerStats, setPlayerStats] = useState(initialPlayerStats);
     const [combatLog, setCombatLog] = useState([]);
@@ -70,10 +69,7 @@ const GoblinScreen = ({ navigation, route} ) => {
 
           handleGoblinAttack(); // Goblin's turn
         } else {
-          setCombatLog((prevLog) => [
-            ...prevLog,
-            'Not enough mana to cast magic.',
-          ]);
+          addLog('Not enough mana to cast magic.', 'player');
         }
       };
 
@@ -88,18 +84,9 @@ const GoblinScreen = ({ navigation, route} ) => {
         setCanPlayerAttack(true); // Enable player's attack
       };
 
-      const handleReturnToMainHallway = () => {
-        handleScenarioAction('NavigateToMainHallway');
-      };
-
       const addLog = (text, source) => {
         setCombatLog((prevLog) => [...prevLog, { text, source }]);
       };
-      
-      
-     
-      
-  
 
       useEffect(() => {
         if (goblinHealth === 0) {
@@ -109,9 +96,7 @@ const GoblinScreen = ({ navigation, route} ) => {
             if (nextScenario) {
                 updateStats(playerStats);
               // Replace the current screen with the Victory scenario
-              navigation.push('VictoryScreen', { 
-                onReturnToMainHallway: handleReturnToMainHallway,
-             });
+              navigation.navigate('VictoryScreen');
             } else {
                 console.error(`Scenario with ID ${nextScenarioId} not found.`);
             }
@@ -122,15 +107,6 @@ const GoblinScreen = ({ navigation, route} ) => {
             navigation.navigate('GameOverScreen');
         }
 
-        if (!isPlayerTurn) {
-            // Goblin's turn
-            console.log("Player's Current Stats:", playerStats); // Print player's current stats
-            const goblinTimeout = setTimeout(() => {
-                handleGoblinAttack();
-            }, 1000);
-
-            return () => clearTimeout(goblinTimeout);
-        }
     }, [goblinHealth, playerStats, isPlayerTurn, navigation, scenarios, updateStats]);
 
     const scrollViewRef = useRef();
@@ -163,8 +139,8 @@ const GoblinScreen = ({ navigation, route} ) => {
                 {combatLog.map((log, index) => (
                     <Text style={[
                       styles.logInformation,
-                      log.source === 'player' 
-                      ? styles.playerLog 
+                      log.source === 'player'
+                      ? styles.playerLog
                       : log.source === 'goblin'
                       ? styles.goblinLog
                       : styles.magicLog,
@@ -176,8 +152,6 @@ const GoblinScreen = ({ navigation, route} ) => {
                 ))}
             </View>
           </ScrollView>
-              {goblinHealth === 0 && <VictoryScreen onReturnToMainHallway={handleReturnToMainHallway} />}
-
         </View>
     );
 };

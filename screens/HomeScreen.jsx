@@ -3,17 +3,23 @@ import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import logoTextImage from '../assets/img/logo.png';
 
-//import HomeLayout from '../layout/HomeLayout'; 
+//import HomeLayout from '../layout/HomeLayout';
 
 
 const HomeScreen = ({ navigation }) => {
-  const [scaleNewGame] = useState(new Animated.Value(1));
-  const [scaleLoadGame] = useState(new Animated.Value(1));
+  const [scaleStartGame] = useState(new Animated.Value(1));
+  //const [scaleNewGame] = useState(new Animated.Value(1));
+  //const [scaleLoadGame] = useState(new Animated.Value(1));
 
-  const startNewGame = () => {
+  const startGame = () => {
+    navigation.navigate('IntroPage');
+    console.log('New Game started');
+  }
+  /*const startNewGame = () => {
     navigation.navigate('IntroPage');
     console.log('New Game started');
   };
+  */
 
   const loadSavedGame = () => {
     // Add logic for loading a saved game
@@ -40,8 +46,8 @@ const HomeScreen = ({ navigation }) => {
 
     const runAnimation = () => {
       if (isMounted) {
-        Animated.loop(breatheAnimation(scaleNewGame)).start();
-        Animated.loop(breatheAnimation(scaleLoadGame)).start();
+        Animated.loop(breatheAnimation(scaleStartGame)).start();
+        //Animated.loop(breatheAnimation(scaleLoadGame)).start();
       }
     };
 
@@ -50,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
     return () => {
       isMounted = false;
     };
-  }, [scaleNewGame, scaleLoadGame]);
+  }, [scaleStartGame]);
 
   return (
     <View style={styles.container}>
@@ -58,18 +64,19 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.ButtonContainer}>
         <Text style={styles.Title}>TRAVELERS</Text>
         <TouchableOpacity
-          style={[styles.button, { transform: [{ scale: scaleNewGame }] }]}
-          onPress={startNewGame}
+          style={[styles.button, { transform: [{ scale: scaleStartGame }] }]}
+          onPress={startGame}
         >
-          <Text style={styles.buttonText}>New Game</Text>
+          <Text style={styles.buttonText}>Start Game</Text>
         </TouchableOpacity>
         <View style={styles.ButtonSpace} />
-        <TouchableOpacity
+        {/*<TouchableOpacity
           style={[styles.button, { transform: [{ scale: scaleLoadGame }] }]}
           onPress={loadSavedGame}
         >
           <Text style={styles.buttonText}>Load Game</Text>
         </TouchableOpacity>
+  */}
       </View>
     </View>
   );
