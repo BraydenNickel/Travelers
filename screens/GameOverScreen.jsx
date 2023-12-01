@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import ChoiceButton from '../layout/ChoiceButton';
 
 const GameOverScreen = ({ navigation }) => {
   const handleTryAgain = () => {
@@ -14,12 +15,8 @@ const GameOverScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Game Over</Text>
-      <TouchableOpacity style={styles.button} onPress={handleTryAgain}>
-        <Text style={styles.buttonText}>Try Again</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleMainMenu}>
-        <Text style={styles.buttonText}>Main Menu</Text>
-      </TouchableOpacity>
+      <ChoiceButton title='Play Again' onPress={handleTryAgain}/>
+      <ChoiceButton title='Main Menu' onPress={handleMainMenu}/>
     </View>
   );
 };
@@ -27,12 +24,12 @@ const GameOverScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3f3f3f',
+    backgroundColor: 'rgba(12, 12, 12, 0.90)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   title: {
-    color: 'white',
+    color: 'rgba(182,6,6,1)',
     fontFamily: 'MedievalSharp-Regular',
     fontSize: 40,
     marginVertical: 20,

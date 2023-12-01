@@ -3,17 +3,22 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import ChoiceButton from '../layout/ChoiceButton';
 
-const VictoryScreen = ({ navigation, route }) => {
- const params = route ? route.params : null;
+const VictoryScreen = ({ navigation}) => {
 
- const onReturnToMainHallway = params ? params.onReturnToMainHallway : null;
+  const handlePlayAgain = () => {
+    navigation.navigate('IntroPage');
+  };
+  const handleExit = () => {
+    navigation.navigate('HomeScreen');
+  };
 
   console.log('VictoryScreen rendered');
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Victory!</Text>
-      <ChoiceButton title='Continue' onPress={onReturnToMainHallway}/>
+      <ChoiceButton title='Play Again' onPress={handlePlayAgain}/>
+      <ChoiceButton title='Main Menu' onPress={handleExit}/>
     </View>
   );
 };
@@ -21,7 +26,7 @@ const VictoryScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3f3f3f',
+    backgroundColor: 'rgba(12, 12, 12, 0.90)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -30,6 +35,7 @@ const styles = StyleSheet.create({
     fontFamily: 'MedievalSharp-Regular',
     fontSize: 40,
     marginVertical: 20,
+    marginBottom: 20,
   },
   button: {
     backgroundColor: '#808080',
