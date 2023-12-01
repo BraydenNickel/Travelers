@@ -178,9 +178,9 @@ export default function GameScenarios() {
     image: Image.resolveAssetSource(TreePath).uri,
     question: 'You see a path that never ends. Do you continue forward or take an unknown path?',
     choices: [
-      { id: 'A', text: 'Stay on the path', nextScenario: generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(2) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
-      { id: 'B', text: 'Go left', nextScenario: generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(2) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
-      { id: 'C', text: 'Go right', nextScenario: generateEncounter(15) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(15) ? 'ForestAnimals' : generateEncounter(15) ? 'DruidForest' : generateEncounter(7) ? 'TreeSpiritForest' : generateEncounter(2) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
+      { id: 'A', text: 'Stay on the path', nextScenario: generateEncounter(26) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(26) ? 'ForestAnimals' : generateEncounter(22) ? 'DruidForest' : generateEncounter(10) ? 'TreeSpiritForest' : generateEncounter(4) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
+      { id: 'B', text: 'Go left', nextScenario: generateEncounter(26) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(26) ? 'ForestAnimals' : generateEncounter(22) ? 'DruidForest' : generateEncounter(10) ? 'TreeSpiritForest' : generateEncounter(4) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
+      { id: 'C', text: 'Go right', nextScenario: generateEncounter(26) ? 'ChestForest' : generateEncounter(5) ? 'FairyPortal' : generateEncounter(26) ? 'ForestAnimals' : generateEncounter(22) ? 'DruidForest' : generateEncounter(10) ? 'TreeSpiritForest' : generateEncounter(4) ? 'TreeSpiritForestAngered' : generateEncounter(7) ? 'ForestDeath' : 'TreePath' },
       { id: 'D', text: 'Set up camp', nextScenario: 'MagicalForestRest' },
     ],
    },
