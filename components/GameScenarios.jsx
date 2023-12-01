@@ -18,7 +18,7 @@ import ForestDeath from '../assets/img/ForestDeath.jpeg';
 import TreeSpiritForest from '../assets/img/TreeSpiritForest.jpeg';
 import { Image } from '@rneui/base';
 
-export default function GameScenarios() {
+export default function GameScenarios( { navigate }) {
 
   const [playerStats, setPlayerStats] = useState({
     maxHealth: 100,
@@ -51,6 +51,34 @@ export default function GameScenarios() {
 
   const generateEncounter = (chance) => {
     return getRandomInt(1, 100) <= chance;
+  };
+
+  const handleScenarioAction = (action, params) => {
+    if (action === 'NavigateToMainHallway') {
+      const mainHallwayScenario = scenarios.find(
+        (scenario) => scenario.id === 'MainHallway'
+      );
+
+      if (mainHallwayScenario) {
+        updateStats(playerStats);
+        navigation.navigate('MainHallway', { scenario: mainHallwayScenario});
+        console.log('MainHallway Scenario found');
+      } else {
+        console.error("Scenario 'MainHallway' not found.");
+      }
+    }
+  };
+
+  const handleReturnToMainHallway = () => {
+    const mainHallwayScenario = scenarios.find((scenario) => scenario.id === 'MainHallway');
+
+    if (mainHallwayScenario) {
+      updateStats(playerStats);
+      navigate('MainHallway', { scenario: mainHallwayScenario });
+      console.log('MainHallway Scenario Found.');
+    } else {
+      console.error("Scenario 'MainHallway' not found.");
+    }
   };
 
   const scenarios = [
@@ -343,5 +371,5 @@ export default function GameScenarios() {
 
 
   ];
-  return { scenarios, updateStats, playerStats };
+  return { scenarios, updateStats, playerStats, handleScenarioAction };
 }

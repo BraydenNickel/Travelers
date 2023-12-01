@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
   Image: {
     alignSelf: 'center',
     width: '100%',
+    height: '100%',
   },
   buttonText: {
     color: 'white',

@@ -9,7 +9,7 @@ import VictoryScreen from '../screens/VictoryScreen';
 
 
 const GoblinScreen = ({ navigation, route} ) => {
-    const { scenarios } = GameScenarios();
+    const { scenarios,handleScenarioAction } = GameScenarios({ navigate: navigation.navigate });
     const { playerStats: initialPlayerStats, updateStats } = route.params;
     const [playerStats, setPlayerStats] = useState(initialPlayerStats);
     const [combatLog, setCombatLog] = useState([]);
@@ -34,16 +34,14 @@ const GoblinScreen = ({ navigation, route} ) => {
         updateStats(playerStats);
     }, [updateStats, playerStats]);
 
+
     const handleAttack = () => {
         if (!canPlayerAttack) {
             return;
         }
         const playerDamage = Math.floor(Math.random() * playerStats.strength) + 1;
         setGoblinHealth((prevHealth) => Math.max(prevHealth - playerDamage, 0));
-        setCombatLog((prevLog) => [
-          ...prevLog,
-          `Player attacks for ${playerDamage} damage.`,
-        ]);
+        addLog(`Player attacks for ${playerDamage} damage.`, 'player');
         setIsPlayerTurn(false); //Switch to goblin's turn
         setCanPlayerAttack(false); // Disable player's attack
 
@@ -63,10 +61,7 @@ const GoblinScreen = ({ navigation, route} ) => {
             Math.floor(Math.random() * playerStats.intelligence) + 1;
           setGoblinHealth((prevHealth) => Math.max(prevHealth - magicDamage, 0));
           setPlayerStats((prevStats) => ({ ...prevStats, mana: prevStats.mana - 10 }));
-          setCombatLog((prevLog) => [
-            ...prevLog,
-            `Player casts magic for ${magicDamage} damage.`,
-          ]);
+          addLog(`Player casts magic for ${magicDamage} damage.`, 'magic');
           setIsPlayerTurn(false); //Switch to goblin's turn
           setCanPlayerAttack(false); // Disable player's attack
               // Log playerStats every attack
@@ -88,25 +83,22 @@ const GoblinScreen = ({ navigation, route} ) => {
           ...prevStats,
           health: Math.max(prevStats.health - goblinDamage, 0),
         }));
-        setCombatLog((prevLog) => [
-          ...prevLog,
-          `Goblin attacks for ${goblinDamage} damage.`,
-        ]);
+        addLog(`Goblin attacks for ${goblinDamage} damage.`, 'goblin');
         setIsPlayerTurn(true); //Switch to player's turn
         setCanPlayerAttack(true); // Enable player's attack
       };
 
       const handleReturnToMainHallway = () => {
-        const mainHallwayScenario = scenarios.find((scenario) => scenario.id === 'MainHallway');
-
-        if (mainHallwayScenario) {
-          updateStats(playerStats);
-          navigation.navigate('MainHallway', {scenario: mainHallwayScenario});
-          console.log('MainHallway Scenario Found.');
-        } else {
-          console.error("Scenario 'MainHallway' not found.");
-        }
+        handleScenarioAction('NavigateToMainHallway');
       };
+
+      const addLog = (text, source) => {
+        setCombatLog((prevLog) => [...prevLog, { text, source }]);
+      };
+      
+      
+     
+      
   
 
       useEffect(() => {
@@ -117,7 +109,9 @@ const GoblinScreen = ({ navigation, route} ) => {
             if (nextScenario) {
                 updateStats(playerStats);
               // Replace the current screen with the Victory scenario
-              navigation.navigate('VictoryScreen', { scenario: nextScenario });
+              navigation.push('VictoryScreen', { 
+                onReturnToMainHallway: handleReturnToMainHallway,
+             });
             } else {
                 console.error(`Scenario with ID ${nextScenarioId} not found.`);
             }
@@ -152,9 +146,9 @@ const GoblinScreen = ({ navigation, route} ) => {
         <View style={styles.container}>
           <Image source = {goblinImage} style={styles.Image} />
           <View style={styles.informationContainer}>
+          <Text style={styles.informationEnemy}><Text style={styles.goblin}>Goblin</Text> Health: <Text style={styles.health}>{goblinHealth}</Text></Text>
             <Text style={styles.information}>Player Health: <Text style={styles.health}>{playerStats.health}</Text></Text>
             <Text style={styles.information}>Player Mana: <Text style={styles.mana}>{playerStats.mana}</Text></Text>
-            <Text style={styles.information}><Text style={styles.goblin}>Goblin</Text> Health: <Text style={styles.health}>{goblinHealth}</Text></Text>
           </View>
           <View style={styles.buttonContainer}>
               <ChoiceButton title="Physical Attack" onPress={handleAttack} />
@@ -167,11 +161,23 @@ const GoblinScreen = ({ navigation, route} ) => {
             onContentSizeChange={scrollToBot}>
             <View style={styles.logContainer}>
                 {combatLog.map((log, index) => (
-                    <Text style={styles.logInformation} key={index}>{log}</Text>
+                    <Text style={[
+                      styles.logInformation,
+                      log.source === 'player' 
+                      ? styles.playerLog 
+                      : log.source === 'goblin'
+                      ? styles.goblinLog
+                      : styles.magicLog,
+                    ]}
+                    key={index}
+                    >
+                      {log.text}
+                    </Text>
                 ))}
             </View>
           </ScrollView>
               {goblinHealth === 0 && <VictoryScreen onReturnToMainHallway={handleReturnToMainHallway} />}
+
         </View>
     );
 };
@@ -184,6 +190,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingLeft: 15,
     paddingTop: 20,
+    paddingRight: 15,
   },
 
   information: {
@@ -193,6 +200,15 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
     textAlign: 'left',
   },
+
+  informationEnemy: {
+    color: 'white',
+    fontSize: 24,
+    fontFamily: 'MedievalSharp-Regular',
+    paddingBottom: 4,
+    textAlign: 'right',
+    paddingRight: 15,
+  },
   health: {
     color: 'red',
   },
@@ -200,11 +216,23 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
   goblin: {
-    color: 'green',
+    color: 'rgba(38,185,70,1)',
+  },
+
+  playerLog: {
+    color: 'white',
+  },
+  magicLog: {
+    color: 'white',
+  },
+  goblinLog: {
+    color: 'rgba(38,185,70,1)',
   },
 
   informationContainer : {
     marginBottom: 25,
+    width: '100%',
+    borderColor: 'white',
   },
 
   buttonContainer : {
@@ -221,7 +249,7 @@ const styles = StyleSheet.create({
 
   logScrollContainer : {
     flex: 1,
-    maxHeight: 350,
+    maxHeight: 60,
     marginTop: 20,
   },
   Image: {

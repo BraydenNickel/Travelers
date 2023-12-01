@@ -5,11 +5,15 @@ import { View, Image, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import GameScenarios from '../components/GameScenarios';
 import ChoiceButton from '../layout/ChoiceButton';
+import VictoryScreen from './VictoryScreen';
+import GoblinScreen from '../components/GoblinScreen';
 
 
 function GameScreen({ navigation }) {
     const [currentScenario, setCurrentScenario] = useState('GameStart');
-    const { scenarios, playerStats, updateStats} = GameScenarios();
+    const { scenarios, playerStats, updateStats, handleScenarioAction} = GameScenarios({
+        navigate: navigation.navigate,
+    });
 
     const handleChoice = (choiceIndex) => {
         const currentScenarioData = scenarios.find((scenario) => scenario.id === currentScenario);

@@ -1,19 +1,19 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import ChoiceButton from '../layout/ChoiceButton';
 
-const VictoryScreen = ({ navigation, onReturnToMainHallway}) => {
-  const handleReturnToGame = () => {
-    onReturnToMainHallway();
-  };
+const VictoryScreen = ({ navigation, route }) => {
+ const params = route ? route.params : null;
+
+ const onReturnToMainHallway = params ? params.onReturnToMainHallway : null;
 
   console.log('VictoryScreen rendered');
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Victory!</Text>
-      <ChoiceButton title='Continue' onPress={handleReturnToGame}/>
+      <ChoiceButton title='Continue' onPress={onReturnToMainHallway}/>
     </View>
   );
 };

@@ -1,11 +1,14 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from 'react';
-import { View, Image, Button, Text } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Image, Button, Text, StyleSheet, ScrollView } from 'react-native';
 import GameScenarios from './GameScenarios';
 import { useFocusEffect } from '@react-navigation/native';
+import bullImage from '../assets/img/boss_encounter.jpeg';
+import ChoiceButton from '../layout/ChoiceButton';
+import VictoryScreen from '../screens/VictoryScreen';
 
 const MinotaurScreen = ({ navigation, route} ) => {
-    const { scenarios } = GameScenarios();
+    const { scenarios, handleScenarioAction } = GameScenarios({ navigate: navigation.navigate });
     const { playerStats: initialPlayerStats, updateStats } = route.params;
     const [playerStats, setPlayerStats] = useState(initialPlayerStats);
     const [combatLog, setCombatLog] = useState([]);
@@ -36,10 +39,7 @@ const MinotaurScreen = ({ navigation, route} ) => {
         }
         const playerDamage = Math.floor(Math.random() * playerStats.strength) + 1;
         setMinotaurHealth((prevHealth) => Math.max(prevHealth - playerDamage, 0));
-        setCombatLog((prevLog) => [
-          ...prevLog,
-          `Player attacks for ${playerDamage} damage.`,
-        ]);
+        addLog(`Player attacks for ${playerDamage} damage.`, 'player');
         setIsPlayerTurn(false); //Switch to minotaur's turn
         setCanPlayerAttack(false); // Disable player's attack
 
@@ -59,10 +59,7 @@ const MinotaurScreen = ({ navigation, route} ) => {
             Math.floor(Math.random() * playerStats.intelligence) + 1;
           setMinotaurHealth((prevHealth) => Math.max(prevHealth - magicDamage, 0));
           setPlayerStats((prevStats) => ({ ...prevStats, mana: prevStats.mana - 10 }));
-          setCombatLog((prevLog) => [
-            ...prevLog,
-            `Player casts magic for ${magicDamage} damage.`,
-          ]);
+          addLog(`Player casts magic for ${magicDamage} damage.`, 'magic');
           setIsPlayerTurn(false); //Switch to minotaur's turn
           setCanPlayerAttack(false); // Disable player's attack
               // Log playerStats every attack
@@ -84,12 +81,13 @@ const MinotaurScreen = ({ navigation, route} ) => {
           ...prevStats,
           health: Math.max(prevStats.health - minotaurDamage, 0),
         }));
-        setCombatLog((prevLog) => [
-          ...prevLog,
-          `Minotaur attacks for ${minotaurDamage} damage.`,
-        ]);
+        addLog(`Minotaur attacks for ${minotaurDamage} damage.`, 'bull');
         setIsPlayerTurn(true); //Switch to player's turn
         setCanPlayerAttack(true); // Enable player's attack
+      };
+
+      const addLog = (text, source) => {
+        setCombatLog((prevLog) => [...prevLog, { text, source }]);
       };
 
       useEffect(() => {
@@ -122,21 +120,135 @@ const MinotaurScreen = ({ navigation, route} ) => {
         }
     }, [minotaurHealth, playerStats, isPlayerTurn, navigation, scenarios, updateStats]);
 
+    const scrollViewRef = useRef();
+
+    const scrollToBot = () => {
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollToEnd({ animated:true});
+      }
+    };
+
 
     return (
-        <View>
-            <Text>Player Health: {playerStats.health}</Text>
-            <Text>Player Mana: {playerStats.mana}</Text>
-            <Text>Minotaur Health: {minotaurHealth}</Text>
-            <Button title="Physical Attack" onPress={handleAttack} />
-            <Button title="Magic Attack" onPress={handleMagic} />
-            <View>
-                {combatLog.map((log, index) => (
-                    <Text key={index}>{log}</Text>
-                ))}
-            </View>
+      <View style={styles.container}>
+      <Image source = {bullImage} style={styles.Image} />
+      <View style={styles.informationContainer}>
+      <Text style={styles.informationEnemy}><Text style={styles.bull}>Minotaur</Text> Health: <Text style={styles.health}>{minotaurHealth}</Text></Text>
+        <Text style={styles.information}>Player Health: <Text style={styles.health}>{playerStats.health}</Text></Text>
+        <Text style={styles.information}>Player Mana: <Text style={styles.mana}>{playerStats.mana}</Text></Text>
+      </View>
+      <View style={styles.buttonContainer}>
+          <ChoiceButton title="Physical Attack" onPress={handleAttack} />
+          <ChoiceButton title="Magic Attack" onPress={handleMagic} />
+          <ChoiceButton title="Run Away" onPress={() => navigation.pop()} />
+      </View>
+      <ScrollView
+        style={styles.logScrollContainer}
+        ref={scrollViewRef}
+        onContentSizeChange={scrollToBot}>
+        <View style={styles.logContainer}>
+            {combatLog.map((log, index) => (
+                <Text style={[
+                  styles.logInformation,
+                  log.source === 'player' 
+                  ? styles.playerLog 
+                  : log.source === 'bull'
+                  ? styles.bullLog
+                  : styles.magicLog,
+                ]}
+                key={index}
+                >
+                  {log.text}
+                </Text>
+            ))}
         </View>
-    );
+      </ScrollView>
+          {minotaurHealth === 0 && <VictoryScreen onReturnToMainHallway={handleReturnToMainHallway} />}
+
+    </View>
+);
 };
+
+const styles = StyleSheet.create({
+container : {
+flex: 1,
+backgroundColor: 'rgba(12,12,12,0.90)',
+alignItems: 'flex-start',
+justifyContent: 'flex-start',
+paddingLeft: 15,
+paddingTop: 20,
+paddingRight: 15,
+},
+
+information: {
+color: 'white',
+fontSize: 24,
+fontFamily: 'MedievalSharp-Regular',
+paddingBottom: 4,
+textAlign: 'left',
+},
+
+informationEnemy: {
+color: 'white',
+fontSize: 24,
+fontFamily: 'MedievalSharp-Regular',
+paddingBottom: 4,
+textAlign: 'right',
+paddingRight: 15,
+},
+health: {
+color: 'red',
+},
+mana: {
+color: 'blue',
+},
+bull: {
+color: 'rgba(114,34,16,1)',
+},
+
+playerLog: {
+color: 'white',
+},
+magicLog: {
+color: 'blue',
+},
+bullLog: {
+color: 'rgba(114,34,16,1)',
+},
+
+informationContainer : {
+marginBottom: 25,
+width: '100%',
+borderColor: 'white',
+},
+
+buttonContainer : {
+alignSelf: 'center',
+marginTop: 10,
+marginRight: 15,
+},
+
+logInformation : {
+color: 'white',
+fontSize: 20,
+fontFamily: 'MedievalSharp-Regular',
+},
+
+logScrollContainer : {
+flex: 1,
+maxHeight: 60,
+marginTop: 20,
+},
+Image: {
+alignSelf: 'center',
+width: '90%',
+height: '35%',
+position: 'relative',
+marginTop: 20,
+marginBottom: 20,
+},
+
+
+});
 
 export default MinotaurScreen;
